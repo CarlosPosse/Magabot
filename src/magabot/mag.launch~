@@ -1,0 +1,9 @@
+<launch>
+  <!-- IMU FILTER MADGWICK -->
+  <node name="madgwickFilter" pkg="imu_filter_madgwick" type="imu_filter_node">
+    <remap from="/imu/data" to="/imu_data"/>
+    <param name="use_mag" value="false"/>
+    <param name="gain" value="0.25"/>
+  </node>
+  
+</launch>

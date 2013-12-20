@@ -1,0 +1,5 @@
+controller_frequency: 10.0  # Rate for the control loop and sending velocities (Hz)
+
+oscillation_timeout: 2.0  # Time allowing for oscillation before recovery (s)
+
+oscillation_distance: 0.5  # Minimum distance to not be considered oscillation

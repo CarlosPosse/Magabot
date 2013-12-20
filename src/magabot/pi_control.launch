@@ -1,0 +1,7 @@
+<launch>
+  <!-- ROSSERIAL -->
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" />
+
+  <!-- LASER SCAN -->
+  <node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1"/>
+</launch>

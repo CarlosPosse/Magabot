@@ -1,0 +1,29 @@
+<launch>
+  <!-- ROSSERIAL -->
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0"/>
+  
+  <!-- MOTOR CONTROL -->
+  <node name="motorControl" pkg="magabot" type="MotorControl">
+    <remap from="motorSpeed" to="speed"/>
+    <remap from="joyControl" to="cmd_vel"/>
+  </node>
+  
+  <!-- MOTOR ODOMETRY -->
+  <node name="motorOdomotery" pkg="magabot" type="MotorOdometry" />
+  
+  <!-- WIIMOTE -->
+  <node name="wiimote" pkg="wiimote" type="wiimote_node.py">
+    <remap from="/imu/data" to="/imu/data_raw"/>
+    <remap from="joy" to="wiiJoy"/>
+  </node>
+  
+    <!-- LASER SCAN -->
+  <node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1"/>
+  
+  <!-- TFs -->
+  <node name="laser_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0.0305 0 0.0871 0 0 0 1 base_link laser 100" />
+  
+  <node name="imu_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="-0.0721 0 0.072 0 0 0 1 base_link imu 100" />
+  
+  <node name="base_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0.050825 0 0 0 1 base_footprint base_link 100" /> 
+</launch>

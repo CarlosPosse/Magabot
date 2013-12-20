@@ -1,0 +1,32 @@
+<launch>
+  <machine name="machine" address="192.168.1.112" default="true" />
+  <machine name="pi" address="192.168.1.1" user="pi" default="true" />
+  
+  <!-- ROSSERIAL -->
+  <node machine="pi" name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" />
+  
+  <!-- MOTOR CONTROL -->
+  <node machine="machine" name="motorControl" pkg="magabot" type="MotorControl">
+    <remap from="motorSpeed" to="speed"/>
+    <remap from="joyControl" to="cmd_vel"/>
+  </node>
+  
+  <!-- MOTOR ODOMETRY -->
+  <node machine="machine" name="motorOdomotery" pkg="magabot" type="MotorOdometry"/>
+  
+  <!-- WIIMOTE -->
+  <node machine="machine" name="wiimote" pkg="wiimote" type="wiimote_node.py">
+    <remap from="/imu/data" to="/imu/data_raw"/>
+    <remap from="joy" to="wiiJoy"/>
+  </node>
+
+  <!-- LASER SCAN -->
+  <node machine="pi" name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1"/>
+  
+  <!-- TFs -->
+  <node machine="machine" name="laser_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0.0305 0 0.0871 0 0 0 1 base_link laser 100" />
+  
+  <node machine="machine" name="imu_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="-0.0721 0 0.072 0 0 0 1 base_link imu 100" />
+  
+  <node machine="machine" name="base_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0.050825 0 0 0 1 base_footprint base_link 100" /> 
+</launch>

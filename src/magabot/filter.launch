@@ -1,0 +1,24 @@
+<launch>
+  <!-- IMU FILTER MADGWICK -->
+  <node name="madgwickFilter" pkg="imu_filter_madgwick" type="imu_filter_node">
+    <remap from="/imu/data" to="/imu_data"/>
+    <param name="use_mag" value="false"/>
+    <param name="gain" value="0.25"/>
+    <param name="publish_tf" value="false"/>
+    <param name="fixed_frame" value="imu"/>
+  </node>
+  
+  <!-- EXTENDED KALMAN FILTER -->
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+    <param name="output_frame" value="odom_combined"/>
+    <remap from="/robot_pose_ekf/odom_combined" to="/odom_combined"/>
+    <param name="freq" value="30.0"/>
+    <param name="sensor_timeout" value="1.0"/>
+    <param name="odom_used" value="true"/>
+    <param name="imu_used" value="true"/>
+    <param name="vo_used" value="false"/>
+    <param name="debug" value="false"/>
+    <param name="self_diagnose" value="false"/>
+  </node>
+
+</launch>

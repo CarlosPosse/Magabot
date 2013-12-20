@@ -1,0 +1,34 @@
+# COORDINATE AND TF
+global_frame: odom_combined  # Global frame for the costmap
+robot_base_frame: base_link  # Frame for the base link of robot
+transform_tolerance: 1  # Delay with a tf not published (s)
+
+# RATE
+update_frequency: 10.0  # Frequency to update the map (Hz)
+publish_frequency: 5.0  # Frequency to display the map (Hz)
+
+# COMMON
+max_obstacle_height: 0.05  # Maximum height of an obstacle (m)
+min_obstacle_height: 0.002  #
+obstacle_range: 3.0  # Maximum distance for an obstacle to be inserted to the costmap
+raytrace_range: 3.0  # Maximum distance to raytrace obstacles from the map
+
+# MAP TYPE
+map_type: voxel  # costmap for 2D, voxel for 3D
+origin_z: 0  # Origin of the map (m)
+z_resolution: 0.02  # Resolution of the map (m)
+z_voxels: 16  # Height of the grid is: voxels*resolution
+unknown_treshold: 10
+mark_threshold: 0
+origin_x: 0.0
+origin_y: 0.0
+
+# ROBOT DESCRIPTION
+footprint: [[-0.1923, -0.2255], [-0.1923, 0.2255], [0.1923, 0.2255], [0.1923, -0.2255]]
+inflation_radius: 0.55
+
+# SENSOR MANAGEMENT
+observation_sources: scan
+
+scan: {sensor_frame: laser, topic: scan, data_type: LaserScan , marking: true, clearing: true, max_obstacle_height: 1, min_obstacle_height: 0.02}
+

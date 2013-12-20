@@ -1,0 +1,68 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(magabot)
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  rosserial_arduino
+  std_msgs
+  message_generation
+  nav_msgs
+  tf
+  geometry_msgs
+)
+
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+
+## Generate messages in the 'msg' folder
+add_message_files(
+  FILES
+  IRsensor.msg
+  motorClick.msg
+  batteryState.msg
+  motorSpeed.msg
+  status.msg
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  nav_msgs
+  tf
+  geometry_msgs
+)
+
+###################################
+## catkin specific configuration ##
+###################################
+
+catkin_package(
+  CATKIN_DEPENDS message_runtime roscpp rospy rosserial_arduino std_msgs tf nav_msgs geometry_msgs
+)
+
+###########
+## Build ##
+###########
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+add_executable(converterIR src/converterIR.cpp)
+add_executable(converterUS src/converterUS.cpp)
+add_executable(MotorControl src/MotorControl.cpp)
+add_executable(MotorOdometry src/MotorOdometry.cpp)
+
+add_dependencies(converterIR magabot_generate_messages_cpp)
+add_dependencies(converterUS magabot_generate_messages_cpp)
+add_dependencies(MotorControl magabot_generate_messages_cpp)
+add_dependencies(MotorOdometry magabot_generate_messages_cpp)
+
+target_link_libraries(converterIR ${catkin_LIBRARIES})
+target_link_libraries(converterUS ${catkin_LIBRARIES})
+target_link_libraries(MotorControl ${catkin_LIBRARIES})
+target_link_libraries(MotorOdometry ${catkin_LIBRARIES})
+

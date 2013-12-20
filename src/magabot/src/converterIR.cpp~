@@ -1,0 +1,102 @@
+#include "ros/ros.h"
+#include "magabot/IRsensor.h"
+
+#define nodeName  "speedControl"
+#define subName1  "rangeLuz"
+#define subName2  "rangeLuz"
+#define PubName1  "speed"
+#define PubName2  "speed"
+
+class Listener{
+	private:
+		int leftMotor = 0;
+		int rightMotor = 0;
+		
+		ros::Subscriber sub1;
+  		ros::Publisher pub1;
+		ros::Subscriber sub2;
+  		ros::Publisher pub2;
+
+		void publishMessage();
+		void callback1(const magabot::IRsensor::ConstPtr& msg);
+		void callback2(const magabot::IRsensor::ConstPtr& msg);
+
+	public:
+		Listener();
+		~Listener();		
+		
+		void init(int argc, char **argv);	
+  		void run();
+};
+Listener::Listener(){
+	
+}
+Listener::~Listener(){
+	
+}
+void Listener::init(int argc, char **argv){	
+	ros::init(argc, argv, nodeName);
+	ros::NodeHandle n;
+
+	sub1 = n.subscribe(subName1, 1000, &Listener::callback, this);
+  	pub1 = n.advertise<sensor_msgs::LaserScan>(PubName1, 50);
+
+	sub2 = n.subscribe(subName2, 1000, &Listener::callback, this);
+  	pub2 = n.advertise<sensor_msgs::LaserScan>(PubName2, 50);
+	
+}
+void Listener::callback1(const magabot::IRsensor::ConstPtr& msg){
+	
+    	//**********************
+	
+	
+	
+	//**********************
+	
+}
+void Listener::callback2(const magabot::IRsensor::ConstPtr& msg){
+	
+    	//**********************
+	
+	
+	
+	//**********************
+	
+}
+
+void Listener::publishMessage(){  
+	ros::Time scan_time = ros::Time::now();
+
+	//**********************
+	
+	
+	
+	//**********************
+	
+    	scan_pub.publish(scan);
+}
+void Listener::run(){
+	ros::Rate loop_rate(100);
+  	while (ros::ok()){    
+    		ros::spinOnce();
+		
+		//**********************
+	
+	
+	
+		//**********************
+		
+    		loop_rate.sleep();
+  	}
+}
+//##########################################################
+int main(int argc, char **argv)
+{
+	Listener listener;
+
+	listener.init(argc, argv);
+
+    	listener.run();
+
+	return 0;
+}

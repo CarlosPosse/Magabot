@@ -1,0 +1,110 @@
+#include<math.h>
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include "magabot/motorSpeed.h"
+
+#define nodeName  "MotorControl" // nome do nó
+#define subName2  "joyControl" // alterar para "cmd_vel" quando se ligar ao stack navegation
+#define PubName2  "speed" // nome do topico onde publica a velocidade dos dois motores do magabot em ticks/3,32ms
+
+#define PI 3.14159
+
+#define Dist 0.355 //diametro do robo ou seja distancia entre as rodas
+#define R 0.0926/2 //diametro da roda em metros 0,0926 m
+#define Rev 3900  //numero total de ticks dos encoders numa volta da roda
+
+#define cte_motor (1/(2*PI*R))*Rev*0.00332 // para converter m/s para ticks/3,32ms
+
+class Listener{
+	private:
+		//**********************
+		
+		int leftMotor;
+		int rightMotor;
+				
+		//velocidades para controlar o robo
+		double vx;
+		double vy;
+		double wz;	
+		
+		magabot::motorSpeed speed;		
+				
+		//**********************
+
+		ros::Subscriber sub2;
+  		ros::Publisher pub2;
+
+		void publishMessage();
+		void callback2(const geometry_msgs::Twist::ConstPtr& msg);
+
+	public:
+		Listener();
+		~Listener();		
+		
+		void init(int argc, char **argv);	
+  		void run();
+};
+Listener::Listener(){
+
+	leftMotor = 0;
+	rightMotor = 0;
+
+	//velocidades para controlar o robo
+	vx = 0.0;
+	vy = 0.0;
+	wz = 0.0;	
+	
+}
+Listener::~Listener(){
+	
+}
+void Listener::init(int argc, char **argv){	
+	ros::init(argc, argv, nodeName);
+	ros::NodeHandle n;
+	
+	sub2 = n.subscribe(subName2, 1000, &Listener::callback2, this);
+	pub2 = n.advertise<magabot::motorSpeed>(PubName2, 1);
+
+}
+void Listener::callback2(const geometry_msgs::Twist::ConstPtr& msg){
+    //**********************	
+	vx = msg->linear.x;
+	vy = msg->linear.y;
+	wz = msg->angular.z;
+		
+	leftMotor = (int)((vx-(wz*(Dist/2)))*cte_motor); // ticks/3,32ms
+	rightMotor = (int)((vx+(wz*(Dist/2)))*cte_motor); // ticks/3,32ms
+		
+	//**********************
+}
+void Listener::publishMessage(){
+	//**********************
+	speed.motorRight = leftMotor; 
+	speed.motorLeft = rightMotor; 
+		
+	//**********************
+	pub2.publish(speed);
+}
+void Listener::run(){
+	ros::Rate loop_rate(80);
+  	while (ros::ok()){    
+    	ros::spinOnce();
+		
+		//**********************
+		publishMessage();
+
+		//**********************
+    	loop_rate.sleep();
+  	}
+}
+//##########################################################
+int main(int argc, char **argv)
+{
+	Listener listener;
+
+	listener.init(argc, argv);
+
+    listener.run();
+
+	return 0;
+}

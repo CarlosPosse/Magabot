@@ -1,0 +1,7 @@
+local_costmap:
+  global_frame: /odom_combined
+  robot_base_frame: base_link
+  
+  width: 4.0
+  height: 4.0
+  resolution: 0.05
