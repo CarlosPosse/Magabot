@@ -5,22 +5,6 @@ find_package(catkin REQUIRED COMPONENTS
   joy
   roscpp
   std_msgs
-  message_generation
-  geometry_msgs
-)
-
-#######################################
-## Declare ROS messages and services ##
-#######################################
-
-add_message_files(
-  FILES
-  Control.msg
-)
-
-generate_messages(
-  DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
   geometry_msgs
 )
 
@@ -29,7 +13,7 @@ generate_messages(
 ###################################
 
 catkin_package(
-  CATKIN_DEPENDS message_runtime roscpp rospy joy std_msgs geometry_msgs
+  CATKIN_DEPENDS roscpp rospy joy std_msgs geometry_msgs
 )
 
 ###########

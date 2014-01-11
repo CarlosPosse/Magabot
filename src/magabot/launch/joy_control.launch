@@ -22,14 +22,16 @@
     <param name="deadzone" value="0.12" />
   </node>
 
+  <!-- XBOX CONTROL JOY -->
+  <node name="joyControl" pkg="xboxjoy" type="xboxjoy_node">
+    <remap from="joyControl" to="cmd_vel"/>
+  <node>
+
   <!-- AXES -->
   <param name="axis_linear" value="1" type="double"/>
   <param name="axis_angular" value="0" type="double"/>
   <param name="scale_linear" value="2" type="double"/>
   <param name="scale_angular" value="2" type="double"/>
-
-  <!-- XBOX CONTROL JOY -->
-  <node name="joyControl" pkg="xboxjoy" type="xboxjoy_node"/>
 
     <!-- LASER SCAN -->
   <node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1"/>

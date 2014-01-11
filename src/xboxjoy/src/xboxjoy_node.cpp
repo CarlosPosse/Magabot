@@ -1,7 +1,6 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
-#include "xboxjoy/Control.h"
 #include <math.h>
 
 #define _USE_MATH_DEFINES
@@ -37,18 +36,18 @@ XboxControl::XboxControl():
   nh_.param("select", select, select);
   nh_.param("axis_linear", linear_, linear_);
   nh_.param("axis_angular", angular_, angular_);
-// %EndTag(PARAMS)%
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>(pubName, 1);  
   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &XboxControl::joyCallback, this);
 }
+// %EndTag(PARAMS)%
 
 // %Tag(CALLBACK)%
 void XboxControl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist motors;
   double lin, ang, vx, vy, wz;
-  int l, r, nextSelect;
+  int nextSelect;
 
   nextSelect = joy->buttons[6];
 
@@ -91,3 +90,4 @@ int main(int argc, char** argv)
   ros::spin();
 }
 // %EndTag(MAIN)%
+

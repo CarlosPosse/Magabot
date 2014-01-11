@@ -5,11 +5,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   rosserial_arduino
-  std_msgs
   message_generation
+  std_msgs
   nav_msgs
-  tf
   geometry_msgs
+  tf
 )
 
 ################################################
@@ -19,11 +19,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  IRsensor.msg
   motorClick.msg
-  batteryState.msg
   motorSpeed.msg
-  status.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -31,8 +28,8 @@ generate_messages(
   DEPENDENCIES
   std_msgs
   nav_msgs
-  tf
   geometry_msgs
+  tf
 )
 
 ###################################
@@ -40,7 +37,7 @@ generate_messages(
 ###################################
 
 catkin_package(
-  CATKIN_DEPENDS message_runtime roscpp rospy rosserial_arduino std_msgs tf nav_msgs geometry_msgs
+  CATKIN_DEPENDS roscpp rospy rosserial_arduino message_runtime std_msgs nav_msgs geometry_msgs tf
 )
 
 ###########
@@ -51,18 +48,12 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(converterIR src/converterIR.cpp)
-add_executable(converterUS src/converterUS.cpp)
-add_executable(MotorControl src/MotorControl.cpp)
-add_executable(MotorOdometry src/MotorOdometry.cpp)
+add_executable(Control src/Control.cpp)
+add_executable(Odometry src/Odometry.cpp)
 
-add_dependencies(converterIR ${catkin_EXPORTED_TARGETS})
-add_dependencies(converterUS ${catkin_EXPORTED_TARGETS})
-add_dependencies(MotorControl ${catkin_EXPORTED_TARGETS})
-add_dependencies(MotorOdometry ${catkin_EXPORTED_TARGETS})
+add_dependencies(Control ${catkin_EXPORTED_TARGETS})
+add_dependencies(Odometry ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(converterIR ${catkin_LIBRARIES})
-target_link_libraries(converterUS ${catkin_LIBRARIES})
-target_link_libraries(MotorControl ${catkin_LIBRARIES})
-target_link_libraries(MotorOdometry ${catkin_LIBRARIES})
+target_link_libraries(Control ${catkin_LIBRARIES})
+target_link_libraries(Odometry ${catkin_LIBRARIES})
 
