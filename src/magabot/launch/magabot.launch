@@ -1,0 +1,13 @@
+<launch>
+  <!-- ROSSERIAL -->
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0"/>
+  
+  <!-- MOTOR CONTROL -->
+  <node name="MotorControl" pkg="magabot" type="Control"/>
+  
+  <!-- MOTOR ODOMETRY -->
+  <node name="MotorOdomotery" pkg="magabot" type="Odometry" />
+  
+  <!-- TFs -->
+  <node name="base_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0.050825 0 0 0 1 base_footprint base_link 100" />	
+</launch>

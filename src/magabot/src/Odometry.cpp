@@ -10,7 +10,7 @@
 #define pubQueue 1000 // Size of publisher topic queue
 #define pubRate 80 // Publishing Rate (Hz)
 
-#define subName "vel" // Topic name to subscribe tick information from arduino (
+#define subName "arduinoTicks" // Topic name to subscribe tick information from arduino (ticks)
 #define subQueue 1000 // Size of subscriber topic queue
 
 #define odomFrame_id "odom" // Odometry frame id

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package>
+  <name>mag_gazebo</name>
+  <version>0.0.0</version>
+  <description>Gazebo plugins and worlds for magabot</description>
+
+  <maintainer email="posse@todo.todo">posse</maintainer>
+  <license>TODO</license>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>mag_description</run_depend>
+  <run_depend>mag_control</run_depend>
+  <run_depend>gazebo_ros</run_depend> 
+  
+  <export></export>
+</package>

@@ -21,6 +21,7 @@ add_message_files(
   FILES
   motorClick.msg
   motorSpeed.msg
+  magabotState.msg
 )
 
 ## Generate added messages and services with any dependencies listed here

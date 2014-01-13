@@ -7,7 +7,7 @@
 
 #define nodeName "MotorControl" // Node name
 
-#define pubName "motorSpeed" // Topic name to publish individual motor speed for arduino (ticks/3.32ms)
+#define pubName "arduinoCmd" // Topic name to publish individual motor speed for arduino (ticks/3.32ms)
 #define pubQueue 1000 // Size of publisher topic queue
 #define pubRate 80 // Publishing Rate (Hz)
 

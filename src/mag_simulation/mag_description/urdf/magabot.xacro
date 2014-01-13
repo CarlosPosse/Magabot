@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<robot name="magabot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Constants with robot dimensions -->
+  <xacro:property name="PI" value="3.14159"/>
+  <xacro:property name="width" value="0.384602"/> <!-- Width of the base chassis -->
+  <xacro:property name="length" value="0.451048"/> <!-- Length of the base chassis -->
+  <xacro:property name="height" value="0.10165"/> <!-- Height of the base chassis -->g
+  <xacro:property name="wheelRadius" value="0.0463"/> <!-- Radius of motorized wheels -->
+  <xacro:property name="wheelWidth" value="0.01"/> <!-- Width of motorized wheels -->
+  <xacro:property name="centerRadius" value="0.0463"/> <!-- Radius of non-motorized wheel -->
+  <xacro:property name="centerWidth" value="0.01"/> <!-- Width of non-motorized wheel -->
+  <xacro:property name="axel_offset" value="0.05"/> <!-- Space btw top of beam and the each joint -->
+
+  <!-- Import Gazebo customization elements -->
+  <xacro:include filename="$(find mag_description)/urdf/magabot.gazebo" />
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find mag_description)/urdf/materials.xacro" />
+  
+  <!-- Macro for motorized wheels -->
+  
+  <xacro:macro name="wheel" params="name reflect">
+  	<link name="${name}">
+			<visual>
+				<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+				</geometry>
+				<material name="blue"/>
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<mass value="10"/>
+				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+			</inertial>
+		</link>
+		
+		<joint name="base_${name}" type="continuous">
+		  <parent link="base_link"/>
+		  <child link="${name}"/>
+		  <axis xyz="0 1 0"/>
+		  <origin xyz="${reflect*.15} .1 0" rpy="0 0 0"/>
+		</joint>
+	</xacro:macro>
+
+  <!-- ........... LINKS ........... -->
+  <link name="base_link">
+  	<visual>
+  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
+  		<geometry>
+  			<box size="${width} ${length} ${height}"/>
+  		</geometry>
+  		<material name="orange"/>-
+  	</visual>
+  	
+  	<collision>
+  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
+  		<geometry>
+  			<box size="${length} ${width} ${height}"/>
+  		</geometry>
+  	</collision>
+  	
+		<inertial>
+  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
+			<mass value="10"/>
+			<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+		</inertial>
+  </link>
+  
+  <xacro:wheel name="leftwheel" reflect="1"/>
+  
+  <xacro:wheel name="rightwheel" reflect="-1"/>
+  
+  <link name="centerwheel">
+  	<visual>
+  		<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+  		<geometry>
+  			<cylinder length="${centerWidth}" radius="${centerRadius}"/>
+  		</geometry>
+  		<material name="Blue"/>
+  	</visual>
+  	
+  	<collision>
+  		<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+  		<geometry>
+  			<cylinder length="${centerWidth}" radius="${centerRadius}"/>
+  		</geometry>
+  	</collision>
+  	
+		<inertial>
+			<mass value="10"/>
+			<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+		</inertial>
+  </link>
+  
+  <!-- ........... JOINTS ........... -->
+  
+  <joint name="base_centerwheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="centerwheel"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 -.1 0" rpy="0 0 0"/>
+  </joint>
+  
+  <!-- ........... TRANSMISSIONS ........... -->
+  
+  <transmission name="leftTrans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_leftwheel"/>
+    <actuator name="leftMotor">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="rightTrans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_rightwheel"/>
+    <actuator name="motorRight">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+</robot>
+
