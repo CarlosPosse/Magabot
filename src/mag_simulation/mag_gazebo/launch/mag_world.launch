@@ -21,7 +21,7 @@
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find mag_description)/urdf/magabot.xacro'" />
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
-  <node name="urdf_spawner" pkg="gazebo	" type="spawn_model" respawn="false" output="screen"
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model Magabot -param robot_description"/>
         
   <!-- ros_control rrbot launch file -->
