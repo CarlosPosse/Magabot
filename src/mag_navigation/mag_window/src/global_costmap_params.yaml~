@@ -1,0 +1,21 @@
+global_costmap:
+  global_frame: /odom_combined
+  robot_base_frame: base_link
+  
+  # MAP MANAGEMENT
+  static_map: false
+  rolling_window: true
+  width: 10.0
+  height: 10.0
+  resolution: 0.1
+
+  # MAP TYPE
+  map_type: voxel  # costmap for 2D, voxel for 3D
+  origin_z: 0  # Origin of the map (m)
+  z_resolution: 0.02  # Resolution of the map (m)
+  z_voxels: 20  # Height of the grid is: voxels*resolution
+  unknown_treshold: 10
+  mark_threshold: 0
+  
+
+  

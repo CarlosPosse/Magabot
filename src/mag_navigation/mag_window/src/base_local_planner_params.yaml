@@ -1,0 +1,38 @@
+TrajectoryPlannerROS:
+  # ROBOT CONFIGURATION
+  max_vel_x: 0.45  # Maximum x velocity (m/s)
+  max_vel_y: 0.45  # Maximum y velocity (m/s)
+  max_rotational_vel: 0.5  # Maximum Angle velocity (rad/s)
+  min_vel_x: 0.1  # Minimum x velocity (m/s)
+  min_vel_y: 0.1  # Minimum y velocity (m/s)
+  min_in_place_rotational_vel: 0.1  # Minimum Angle velocity (rad/s)
+
+  acc_lim_x: 0.2  # Maximum x acceleration (m/s²)
+  acc_lim_y: 0.2  # Maximum y acceleration (m/s²)
+  acc_lim_th: 1  # Maximum Angle acceleration (rad/s²)
+
+  escape_vel: -0.1  # Speed when reversing from getting stuck
+  holonomic_robot: false  # Holonomic = move laterally
+  
+  # GOAL TOLERANCE
+  yaw_goal_tolerance: 0.1  # Rotation tolerance to final goal (rad)
+  xy_goal_tolerance: 0.05  # Meter tolerance to final goal (m)
+  latch_xy_goal_tolerance: true
+
+  # FORWARD SIMULATION
+  sim_time: 0.5  # Time to forward-simulate trajectories (s)
+  sim_granularity: 0.05  # Step size to take between points (m)
+  angular_sim_granularity: 0.01  # Step size to take between angular samples
+  
+  # TRAJECTORY SCORING
+  meter_scoring: true  # Set if distance to goal is meters or cells
+  pdist_scale: 0.6  # Weight for closeness to given path
+  gdist_scane: 0.8  # Weight for attempt to reach local goal
+  occdist_scale: 0.5  # Weight for attempt to avoid obstacles
+  heading_lookahead: 1  # Distance to look ahead when rotating in-place
+  global_frame_id: odom  # Frame to cost_cloud: Should be same as local map
+
+  # OSCILLATION PREVENTION
+  oscillation_reset_dist: 0.05  # Reset oscillation flag distance
+
+

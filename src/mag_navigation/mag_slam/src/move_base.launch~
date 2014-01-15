@@ -1,0 +1,21 @@
+<launch>
+  <master auto="start"/>
+
+  <!-- Run the map server -->
+  <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find my_map_package)/my_map.pgm my_map_resolution"/> -->
+
+  <!--- Run AMCL -->
+ <!-- <include file="$(find amcl)/examples/amcl_omni.launch" /> -->
+ 
+  <node pkg="gmapping" type="slam_gmapping" name="slam_mapping"/>
+    <remap from="_odom_frame" to="odom_combined"/>
+  </node>
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find slam_nav)/src/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find slam_nav)/src/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find slam_nav)/src/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find slam_nav)/src/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find slam_nav)/src/base_local_planner_params.yaml" command="load" />
+  </node>
+</launch>
