@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!-- Inlude Gazebo element -->
+  <xacro:include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.gazebo.xacro" />
+
+  <xacro:macro name="hokuyo_laser" params="parent *origin">
+    <link name="hokuyo_link" type="laser">
+		  <visual>
+		    <insert_block name="origin" />
+		    <geometry>
+		      <box size="0.05 0.05 0.1" />
+		    </geometry>
+		  </visual>
+		  
+		  <collision>
+		    <insert_block name="origin" />
+		    <geometry>
+		      <box size="0.05 0.05 0.1" />
+		    </geometry>
+		  </collision>
+    
+      <inertial>
+        <mass value="0.01" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+      </inertial>
+    </link>
+    
+    <joint name="hokuyo_joint" type="fixed">
+      <axis xyz="0 1 0" />
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="hokuyo_link"/>
+    </joint>
+    
+    <!-- Gazebo elements -->
+    <xacro:hokuyo_laser_gazebo/>
+    
+  </xacro:macro>
+</robot>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+				xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+				xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+				xmlns:xacro="http://ros.org/wiki/xacro">
+				
+	<!-- Include Gazebo element -->
+	<include filename="$(find mag_description)/urdf/sensors/xtion.gazebo.xacro" />
+	
+	<property name="PI" value="3.1415926" />
+
+	<xacro:macro name="xtion" params="parent *origin">
+		<joint name="xtion_joint" type="fixed">
+			<insert_block name="origin" />
+			<parent link="${parent}"/>
+			<child link="xtion_link"/>
+		</joint>
+
+		<link name="xtion_link">
+			<inertial>
+				<mass value="0.200" />
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+			</inertial>
+			
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<mesh filename="package://mag_description/meshes/xtion.dae"/>
+				</geometry>
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0" />
+				<geometry>
+					<box size="0.035 0.185 0.025"/>
+				</geometry>
+			</collision>
+		</link>
+
+		<joint name="xtion_depth_joint" type="fixed">
+			<origin xyz="0.0 0.049 0.0" rpy="0 0 0" />
+			<parent link="xtion_link" />
+			<child link="xtion_depth_frame"/>
+		</joint>
+
+		<link name="xtion_depth_frame"/>
+
+		<joint name="xtion_depth_optical_joint" type="fixed">
+			<origin xyz="0 0 0" rpy="${-PI/2} 0.0 ${-PI/2}" />
+			<parent link="xtion_depth_frame" />
+			<child link="xtion_depth_optical_frame"/>
+		</joint>
+
+		<link name="xtion_depth_optical_frame"/>
+
+		<joint name="xtion_rgb_joint" type="fixed">
+		<origin xyz="0.0 0.022 0.0" rpy="0 0 0" />
+		<parent link="xtion_link" />
+		<child link="xtion_rgb_frame"/>
+		</joint>
+
+		<link name="xtion_rgb_frame"/>
+
+		<joint name="xtion_rgb_optical_joint" type="fixed">
+		<origin xyz="0 0 0" rpy="${-PI/2} 0.0 ${-PI/2}" />
+		<parent link="xtion_rgb_frame" />
+		<child link="xtion_rgb_optical_frame"/>
+		</joint>
+
+		<link name="xtion_rgb_optical_frame"/>
+		
+		<!-- Gazebo element -->
+		<xacro:microstrain_gazebo/>
+	</xacro:macro>
+
+</robot>
+

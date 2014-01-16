@@ -21,7 +21,7 @@ inflation_radius: 0.55
 obstacle_range: 3.0
 raytrace_range: 3.0
 
-observation_sources: scan
+observation_sources: laser_scan
 
-scan: {sensor_frame: laser, data_type: LaserScan, topic: scan , marking: true, clearing: true}
+scan: {sensor_frame: laser, data_type: LaserScan, topic: laser_scan , marking: true, clearing: true}
 
