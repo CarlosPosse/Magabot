@@ -5,14 +5,14 @@
        xmlns:xacro="http://ros.org/wiki/xacro">
 
 	<!-- Inlude Gazebo element -->
-  <xacro:include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.gazebo.xacro" />
+  <include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.gazebo.xacro" />
 
-  <xacro:macro name="hokuyo_laser" params="parent *origin">
+  <xacro:macro name="hokuyo_laser" params="parent *origin topic">
     <link name="hokuyo_link" type="laser">
 		  <visual>
 		    <insert_block name="origin" />
 		    <geometry>
-		      <box size="0.05 0.05 0.1" />
+					<mesh filename="package://mag_description/meshes/hokuyo_laser.dae"/>
 		    </geometry>
 		  </visual>
 		  
@@ -38,7 +38,7 @@
     </joint>
     
     <!-- Gazebo elements -->
-    <xacro:hokuyo_laser_gazebo/>
-    
+    <xacro:hokuyo_laser_gazebo topic="${topic}"/>
   </xacro:macro>
+  
 </robot>

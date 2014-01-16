@@ -21,6 +21,7 @@
   
   <!-- Import Sensors -->
   <xacro:include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.xacro" />
+  <xacro:include filename="$(find mag_description)/urdf/sensors/microstrain.xacro" />
   
   <!-- Import Materials -->
   <xacro:include filename="$(find mag_description)/urdf/materials.xacro" />
@@ -74,13 +75,17 @@
   			<box size="${length} ${width} ${height}"/>
   		</geometry>
   	</collision>
-  	
+  </link>
+  
+  <!-- Dummy link to associate inertia with base_link, to avoid errors in simulation -->
+  <link name="base_inertia">
 		<inertial>
   		<origin xyz="0 0 0.1" rpy="0 0 0"/>
 			<mass value="10"/>
 			<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
 		</inertial>
-  </link>
+	</link>
+  	
   
   <xacro:wheel name="leftwheel" reflect="1"/>
   
@@ -110,6 +115,13 @@
   
   <!-- ........... JOINTS ........... -->
   
+  <joint name="base_inertia_joint" type="fixed">
+  	<parent link="base_link"/>
+  	<child link="base_inertia"/>
+  	<axis xyz="1 0 0"/>
+  	<origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
   <joint name="base_centerwheel" type="continuous">
     <parent link="base_link"/>
     <child link="centerwheel"/>
@@ -119,7 +131,7 @@
   
   <!-- ........... TRANSMISSIONS ........... -->
   
-  <transmission name="leftTrans">
+  <transmission name="leftTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="base_leftwheel"/>
     <actuator name="leftMotor">
@@ -128,7 +140,7 @@
     </actuator>
   </transmission>
 
-  <transmission name="rightTrans">
+  <transmission name="rightTransmission">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="base_rightwheel"/>
     <actuator name="motorRight">
@@ -138,8 +150,13 @@
   </transmission>
   
   <!-- ....... SENSORS ....... -->
-  <xacro:hokuyo_laser parent="base_link">
+  <xacro:hokuyo_laser parent="base_link" topic="laser_scan">
   	<xacro:hokuyo_tf/>
   </xacro:hokuyo_laser>
+  
+  <xacro:microstrain parent="base_link" topic="odom_combined">
+  	<xacro:wiimote_tf/>
+  </xacro:microstrain>
+  
 </robot>
 

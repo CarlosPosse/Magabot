@@ -7,9 +7,9 @@ magabot:
   # Position Controllers ---------------------------------------
   leftwheel_position_controller:
     type: effort_controllers/JointPositionController
-    joint: leftwheel
+    joint: base_leftwheel
     pid: {p: 100.0, i: 0.01, d: 10.0}
   rightwheel_position_controller:
     type: effort_controllers/JointPositionController
-    joint: rightwheel
+    joint: base_rightwheel
     pid: {p: 100.0, i: 0.01, d: 10.0}

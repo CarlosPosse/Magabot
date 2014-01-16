@@ -1,27 +1,24 @@
 <?xml version="1.0"?>
+<robot xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
 
-<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-				xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-				xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-				xmlns:xacro="http://ros.org/wiki/xacro">
-
-	<xacro:macro name="microstrain_gazebo" params="name imu_topic update_rate stdev">
-		<gazebo>
-			<controller:gazebo_ros_imu name="imu_controller" plugin="libgazebo_ros_imu.so">
-				<alwaysOn>true</alwaysOn>
-				<updateRate>80</updateRate>
-				
-				<bodyName>microstrain_link</bodyName>
-				<topicName>imu_data</topicName>
-				
-				<gaussianNoise>0.0001</gaussianNoise>
-				
-				<xyzOffsets>0 0 0</xyzOffsets>
-				<rpyOffsets>0 0 0</rpyOffsets>
-				
-				<interface:position name="imu_position"/>
-			</controller:gazebo_ros_imu>
-		</gazebo>
-	</xacro:macro>
+  <xacro:macro name="microstrain_gazebo" params="topic">
+    <gazebo>
+      <plugin name="imu_controller" filename="libgazebo_ros_imu.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>80</updateRate>
+        
+        <bodyName>microstrain_link</bodyName>
+        <topicName>${topic}</topicName>
+        <serviceName>/default_imu</serviceName>
+        
+        <gaussianNoise>0.0000000289</gaussianNoise> <!-- 0.00017 * 0.00017 -->
+        
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 -180.0 0</rpyOffset>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
 
 </robot>

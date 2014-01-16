@@ -1,12 +1,19 @@
 <?xml version="1.0"?>
 <robot>
 
-  <!-- ros_control plugin -->
+  <!-- ROS Control Plugin -->
   <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/magabot</robotNamespace>
+      <robotParam>/robot_description</robotParam>
     </plugin>
   </gazebo>
+  
+  <!-- ROS Controller Manager Plugin -->
+  <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_controller_manager.so">
+    <alwaysOn>true</alwaysOn>
+    <updateRate>100.0</updateRate>
+  </plugin>
 
   <!-- Chassis -->
   <gazebo reference="base_link">

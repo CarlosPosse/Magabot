@@ -10,7 +10,7 @@
 	
 	<property name="PI" value="3.1415926" />
 
-	<xacro:macro name="xtion" params="parent *origin">
+	<xacro:macro name="xtion" params="parent *origin topic">
 		<joint name="xtion_joint" type="fixed">
 			<insert_block name="origin" />
 			<parent link="${parent}"/>
@@ -72,7 +72,7 @@
 		<link name="xtion_rgb_optical_frame"/>
 		
 		<!-- Gazebo element -->
-		<xacro:microstrain_gazebo/>
+		<xacro:microstrain_gazebo topic="${topic}"/>
 	</xacro:macro>
 
 </robot>
