@@ -1,10 +1,15 @@
 Needed dependencys for magabot navigation:
 
-- control_toolbox
-- gazebo_ros_pkgs
-- imu_tools
-- pcl_conversions
-- realtime_tools
-- ros_control
-- ros_controllers
-
+- joystick-drivers
+- urg-node
+- rosserial
+- rosserial-arduino
+- control-toolbox
+- gazebo-ros-pkgs
+- imu-tools
+- pcl-conversions
+- realtime-tools
+- gazebo-ros-control
+- ros-control
+- ros-controllers
+- controller-manager
