@@ -3,158 +3,65 @@
 
   <!-- Constants with robot dimensions -->
   <xacro:property name="PI" value="3.14159"/>
-  <xacro:property name="width" value="0.384602"/> <!-- Width of the base chassis -->
-  <xacro:property name="length" value="0.451048"/> <!-- Length of the base chassis -->
-  <xacro:property name="height" value="0.10165"/> <!-- Height of the base chassis -->g
-  <xacro:property name="wheelRadius" value="0.0463"/> <!-- Radius of motorized wheels -->
-  <xacro:property name="wheelWidth" value="0.01"/> <!-- Width of motorized wheels -->
-  <xacro:property name="centerRadius" value="0.0463"/> <!-- Radius of non-motorized wheel -->
-  <xacro:property name="centerWidth" value="0.01"/> <!-- Width of non-motorized wheel -->
-  <xacro:property name="axel_offset" value="0.05"/> <!-- Space btw top of beam and the each joint -->
+  <xacro:property name="width" value="0.3846"/> <!-- Width of the base chassis -->
+  <xacro:property name="length" value="0.451"/> <!-- Length of the base chassis -->
+  <xacro:property name="height" value="0.06826"/> <!-- Height of the base chassis -->
+  <xacro:property name="wheelRadius" value="0.045"/> <!-- Radius of motorized wheels -->
+  <xacro:property name="wheelWidth" value="0.0108"/> <!-- Width of motorized wheels -->
+  <xacro:property name="wheelSep" value="0.345"/> <!-- Distance between wheels, for Differential Drive -->
+  <xacro:property name="casterRadius" value="0.0225"/> <!-- Radius of non-motorized wheel -->
+  <xacro:property name="casterWidth" value="0.020"/> <!-- Width of non-motorized wheel -->
+  
+  <!-- Magabot TFs -->
+  <xacro:macro name="footprint_tf"> <origin xyz="0 0 0.0307" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="wheel_tf" params="reflect"> <origin xyz="${reflect*.1725} .0455 0.0143" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="caster_tf"> <origin xyz="0 -0.169 -0.0092" rpy="0 0 0"/> </xacro:macro>
   
   <!-- Sensor TFs -->
-  <xacro:macro name="hokuyo_tf"> <origin xyz="0 0.0305 0.0871" rpy="0 0 0"/> </xacro:macro>
-	<xacro:macro name="wiimote_tf"> <origin xyz="0 -0.0721 0.072" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="hokuyo_tf"> <origin xyz="0 0.0305 ${height}" rpy="0 0 0"/> </xacro:macro>
+	<xacro:macro name="wiimote_tf"> <origin xyz="0 -0.0721 ${height}" rpy="0 0 0"/> </xacro:macro>
 
-  <!-- Import Gazebo elements -->
+  <!-- Import Magabot Gazebo elements -->
   <xacro:include filename="$(find mag_description)/urdf/magabot.gazebo" />
+  <xacro:plugins_gazebo topic="odom_combined" wheelSep="${wheelSep}" wheelRad="${wheelRadius}"/> <xacro:magabot_gazebo/>
+  
+	<!-- Import Parts -->
+	<xacro:include filename="$(find mag_description)/urdf/parts/chassis.xacro" />
+	<xacro:include filename="$(find mag_description)/urdf/parts/wheel.xacro" />
+	<xacro:include filename="$(find mag_description)/urdf/parts/caster.xacro" />
   
   <!-- Import Sensors -->
   <xacro:include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.xacro" />
   <xacro:include filename="$(find mag_description)/urdf/sensors/microstrain.xacro" />
   
   <!-- Import Materials -->
-  <xacro:include filename="$(find mag_description)/urdf/materials.xacro" />
-  
-  <!-- Macro for motorized wheels -->
-  <xacro:macro name="wheel" params="name reflect">
-  	<link name="${name}">
-			<visual>
-				<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
-				<geometry>
-					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
-				</geometry>
-				<material name="blue"/>
-			</visual>
-			
-			<collision>
-				<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
-				<geometry>
-					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
-				</geometry>
-			</collision>
-			
-			<inertial>
-				<mass value="10"/>
-				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-			</inertial>
-		</link>
-		
-		<joint name="base_${name}" type="continuous">
-		  <parent link="base_link"/>
-		  <child link="${name}"/>
-		  <axis xyz="1 0 0"/>
-		  <origin xyz="${reflect*.15} .1 0" rpy="0 0 0"/>
-		</joint>
-	</xacro:macro>
+  <xacro:include filename="$(find mag_description)/urdf/materials/materials.xacro" />
 
-  <!-- ........... LINKS ........... -->
+  <!-- ........... PARTS ........... -->
   
-  <link name="base_link">
-  	<visual>
-  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
-  		<geometry>
-  			<box size="${width} ${length} ${height}"/>
-  		</geometry>
-  		<material name="orange"/>
-  	</visual>
-  	
-  	<collision>
-  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
-  		<geometry>
-  			<box size="${length} ${width} ${height}"/>
-  		</geometry>
-  	</collision>
-  </link>
+  <xacro:chassis width="${width}" length="${length}" height="${height}">
+  	<xacro:footprint_tf/>
+  </xacro:chassis>
   
-  <!-- Dummy link to associate inertia with base_link, to avoid errors in simulation -->
-  <link name="base_inertia">
-		<inertial>
-  		<origin xyz="0 0 0.1" rpy="0 0 0"/>
-			<mass value="10"/>
-			<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-		</inertial>
-	</link>
-  	
+  <xacro:wheel name="leftwheel" wheelWidth="${wheelWidth}" wheelRadius="${wheelRadius}">
+  	<xacro:wheel_tf reflect="-1" />
+  </xacro:wheel>
   
-  <xacro:wheel name="leftwheel" reflect="1"/>
+  <xacro:wheel name="rigthwheel" wheelWidth="${wheelWidth}" wheelRadius="${wheelRadius}">
+  	<xacro:wheel_tf reflect="1" />
+  </xacro:wheel>
   
-  <xacro:wheel name="rightwheel" reflect="-1"/>
-  
-  <link name="centerwheel">
-  	<visual>
-  		<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
-  		<geometry>
-  			<cylinder length="${centerWidth}" radius="${centerRadius}"/>
-  		</geometry>
-  		<material name="Blue"/>
-  	</visual>
-  	
-  	<collision>
-  		<origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
-  		<geometry>
-  			<cylinder length="${centerWidth}" radius="${centerRadius}"/>
-  		</geometry>
-  	</collision>
-  	
-		<inertial>
-			<mass value="10"/>
-			<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-		</inertial>
-  </link>
-  
-  <!-- ........... JOINTS ........... -->
-  
-  <joint name="base_inertia_joint" type="fixed">
-  	<parent link="base_link"/>
-  	<child link="base_inertia"/>
-  	<axis xyz="1 0 0"/>
-  	<origin xyz="0 0 0" rpy="0 0 0"/>
-  </joint>
-  
-  <joint name="base_centerwheel" type="continuous">
-    <parent link="base_link"/>
-    <child link="centerwheel"/>
-    <axis xyz="1 0 0"/>
-    <origin xyz="0 -.1 0" rpy="0 0 0"/>
-  </joint>
-  
-  <!-- ........... TRANSMISSIONS ........... -->
-  
-  <transmission name="leftTransmission">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="base_leftwheel"/>
-    <actuator name="leftMotor">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <transmission name="rightTransmission">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="base_rightwheel"/>
-    <actuator name="motorRight">
-      <hardwareInterface>EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
+  <xacro:caster casterRadius="${casterRadius}" casterWidth="${casterWidth}">
+  	<xacro:caster_tf />
+  </xacro:caster>
   
   <!-- ....... SENSORS ....... -->
+  
   <xacro:hokuyo_laser parent="base_link" topic="laser_scan">
   	<xacro:hokuyo_tf/>
   </xacro:hokuyo_laser>
   
-  <xacro:microstrain parent="base_link" topic="odom_combined">
+  <xacro:microstrain parent="base_link" topic="imu_data">
   	<xacro:wiimote_tf/>
   </xacro:microstrain>
   

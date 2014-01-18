@@ -12,20 +12,20 @@
 		  <visual>
 		    <insert_block name="origin" />
 		    <geometry>
-		      <box size="0.173 0.1585 0.1241" />
+		      <box size="0.0173 0.01585 0.01241" />
 		    </geometry>
 		  </visual>
 		  
 		  <collision>
 		    <insert_block name="origin" />
 		    <geometry>
-		      <box size="0.173 0.1585 0.1241" />
+		      <box size="0.0173 0.01585 0.01241" />
 		    </geometry>
 		  </collision>
 		  
 			<inertial>
+		    <insert_block name="origin" />
 				<mass value="0.01" />
-				<origin xyz="0 0 0" rpy="0 0 0" />
 				<inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
 			</inertial>
 		</link>

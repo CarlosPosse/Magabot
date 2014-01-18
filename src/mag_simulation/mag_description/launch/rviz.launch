@@ -1,6 +1,4 @@
 <launch>
-	<!-- <param name="robot_description" textfile="$(find mag_description)/urdf/magabot.xacro"/> -->
-	
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find mag_description)/urdf/magabot.xacro'" />
 	

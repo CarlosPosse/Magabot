@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot name="magabot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="wheel" params="name wheelWidth wheelRadius *origin">
+		
+		<!-- URDF description -->
+		
+  	<link name="${name}">
+			<visual>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+				</geometry>
+				<material name="blue"/>
+			</visual>
+			
+			<collision>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<mass value="10"/>
+				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+			</inertial>
+		</link>
+		
+		<!-- Joint -->
+		
+		<joint name="base_${name}" type="continuous">
+		  <parent link="base_link"/>
+		  <child link="${name}"/>
+		  <axis xyz="1 0 0"/>
+		  <insert_block name="origin" />
+		</joint>
+		
+		<!-- Transmission -->
+		
+		<transmission name="${name}Trans">
+		  <type>transmission_interface/SimpleTransmission</type>
+		  <joint name="base_${name}"/>
+		  <actuator name="${name}Motor">
+		    <hardwareInterface>EffortJointInterface</hardwareInterface>
+		    <mechanicalReduction>1</mechanicalReduction>
+		  </actuator>
+		</transmission>
+		
+		<!-- Gazebo elements -->
+		
+		<gazebo reference="${name}">
+		  <mu1>0.2</mu1>
+		  <mu2>0.2</mu2>
+		  <material>Gazebo/Blue</material>
+		</gazebo>
+		
+  </xacro:macro>
+</robot>

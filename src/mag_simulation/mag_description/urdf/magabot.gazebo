@@ -1,44 +1,36 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- ROS Control Plugin -->
-  <gazebo>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/magabot</robotNamespace>
-      <robotParam>/robot_description</robotParam>
-    </plugin>
-  </gazebo>
-  
-  <!-- ROS Controller Manager Plugin -->
-  <plugin name="gazebo_ros_controller_manager" filename="libgazebo_ros_controller_manager.so">
-    <alwaysOn>true</alwaysOn>
-    <updateRate>100.0</updateRate>
-  </plugin>
-
-  <!-- Chassis -->
-  <gazebo reference="base_link">
-    <material>Gazebo/Orange</material>
-  </gazebo>
-
-  <!-- Left Wheel -->
-  <gazebo reference="leftwheel">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/Blue</material>
-  </gazebo>
-
-  <!-- Right Wheel -->
-  <gazebo reference="rightwheel">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/Blue</material>
-  </gazebo>
-
-  <!-- Center Wheel -->
-  <gazebo reference="centerwheel">
-    <mu1>0.2</mu1>
-    <mu2>0.2</mu2>
-    <material>Gazebo/Blue</material>
-  </gazebo>
+	<xacro:macro name="plugins_gazebo" params="topic wheelSep wheelRad">
+		<!-- ROS Control Plugin -->
+		<gazebo>
+		  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+		    <robotNamespace>/magabot</robotNamespace>
+		    <robotParam>/robot_description</robotParam>
+    		<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		  </plugin>
+		</gazebo>
+		
+		<!-- ROS Differential Drive Plugin -->
+		<gazebo>
+			<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+				<alwaysOn>true</alwaysOn>
+				<updateRate>80</updateRate>
+				
+				<leftJoint>base_leftwheel</leftJoint>
+				<rightJoint>base_rightwheel</rightJoint>
+				
+				<wheelSeparation>${wheelSep}</wheelSeparation>
+				<wheelDiameter>${wheelRad}</wheelDiameter>
+				
+				<torque>20</torque>
+				
+				<commandTopic>cmd_vel</commandTopic>
+				<odometryTopic>${topic}</odometryTopic>
+				<odometryFrame>${topic}</odometryFrame>
+				<robotBaseFrame>base_footprint</robotBaseFrame>
+			</plugin>
+		</gazebo>
+	</xacro:macro>
 
 </robot>

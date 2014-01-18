@@ -1,15 +1,15 @@
 magabot:
   # Publish all joint states -----------------------------------
-  joint_state_controller:
+  jointControl:
     type: joint_state_controller/JointStateController
-    publish_rate: 50
+    publish_rate: 80
   
   # Position Controllers ---------------------------------------
-  leftwheel_position_controller:
+  leftControl:
     type: effort_controllers/JointPositionController
     joint: base_leftwheel
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  rightwheel_position_controller:
+  rightControl:
     type: effort_controllers/JointPositionController
     joint: base_rightwheel
     pid: {p: 100.0, i: 0.01, d: 10.0}

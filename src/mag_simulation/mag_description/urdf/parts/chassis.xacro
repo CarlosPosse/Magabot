@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot name="magabot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="chassis" params="width length height *origin">
+		
+		<!-- URDF description -->
+		
+		<link name="base_footprint"> <!-- Link to apply the base_footprint to base_link TF -->
+			<origin xyz="0 0 0" rpy="0 0 0" />
+		</link>
+		
+		<link name="base_link"> <!-- Main chassis link -->
+			<visual>
+				<origin xyz="0 0 ${height/2}"/>
+				<geometry>
+					<box size="${width} ${length} ${height}"/>
+				</geometry>
+				<material name="orange"/>
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 ${height/2}"/>
+				<geometry>
+					<box size="${width} ${length} ${height}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 0 ${height/2}"/>
+				<mass value="10"/>
+				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+			</inertial>
+		</link>
+		
+		<!-- Joint -->
+		
+		<joint name="footprint_link" type="fixed">
+			<parent link="base_footprint"/>
+			<child link="base_link"/>
+			<axis xyz="1 0 0"/>
+		  <insert_block name="origin" />
+		</joint>
+		
+		<!-- Gazebo elements -->
+		
+		<gazebo reference="base_footprint"/>
+		
+		<gazebo reference="base_link">
+		  <material>Gazebo/Orange</material>
+		</gazebo>
+		
+  </xacro:macro>
+</robot>

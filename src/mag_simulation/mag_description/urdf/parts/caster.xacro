@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot name="magabot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="caster" params="casterWidth casterRadius *origin">
+		
+		<!-- URDF description -->
+		
+		<link name="caster">
+			<visual>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${casterWidth}" radius="${casterRadius}"/>
+				</geometry>
+				<material name="Blue"/>
+			</visual>
+			
+			<collision>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<geometry>
+					<cylinder length="${casterWidth}" radius="${casterRadius}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin rpy="${PI/2} 0 ${PI/2}"/>
+				<mass value="10"/>
+				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+			</inertial>
+		</link>
+		
+		<!-- Joint -->
+		
+		<joint name="base_caster" type="continuous">
+		  <parent link="base_link"/>
+		  <child link="caster"/>
+		  <axis xyz="1 0 0"/>
+		  <insert_block name="origin"/>
+		</joint>
+		
+		<!-- Transmission -->
+		
+		<transmission name="casterTrans">
+		  <type>transmission_interface/SimpleTransmission</type>
+		  <joint name="base_caster"/>
+		  <actuator name="casterMotor">
+		    <hardwareInterface>EffortJointInterface</hardwareInterface>
+		    <mechanicalReduction>1</mechanicalReduction>
+		  </actuator>
+		</transmission>
+		
+		<!-- Gazebo elements -->
+		
+		<gazebo reference="caster">
+		  <mu1>0.2</mu1>
+		  <mu2>0.2</mu2>
+		  <material>Gazebo/Blue</material>
+		</gazebo>
+		
+  </xacro:macro>
+</robot>
