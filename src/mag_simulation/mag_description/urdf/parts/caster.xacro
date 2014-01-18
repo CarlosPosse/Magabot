@@ -5,7 +5,7 @@
 		
 		<!-- URDF description -->
 		
-		<link name="caster">
+		<link name="caster"> <!-- Caster link -->
 			<visual>
 				<origin rpy="${PI/2} 0 ${PI/2}"/>
 				<geometry>

@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Status1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 463
   - Class: rviz/Selection
@@ -67,7 +67,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        centerwheel:
+        caster:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -117,11 +117,11 @@ Visualization Manager:
       Min Intensity: 1
       Name: LaserScan
       Position Transformer: XYZ
-      Queue Size: 10
+      Queue Size: 1000
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.01
-      Style: Flat Squares
+      Style: Points
       Topic: /laser_scan
       Use Fixed Frame: true
       Use rainbow: true
@@ -187,17 +187,17 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10
+      Distance: 8.8
       Focal Point:
         X: 0
         Y: 0
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.785398
+      Pitch: 0.595398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.785398
+      Yaw: 0.385392
     Saved: ~
 Window Geometry:
   Displays:
@@ -215,5 +215,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1309
-  X: 49
-  Y: -4
+  X: 57
+  Y: 24

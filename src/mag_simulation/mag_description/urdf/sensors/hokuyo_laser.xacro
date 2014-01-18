@@ -10,31 +10,31 @@
   <xacro:macro name="hokuyo_laser" params="parent *origin topic">
     <link name="hokuyo_link" type="laser">
 		  <visual>
-		    <insert_block name="origin" />
+		  	<origin xyz="0 0 0.08" />
 		    <geometry>
 					<mesh filename="package://mag_description/meshes/hokuyo_laser.dae"/>
 		    </geometry>
 		  </visual>
 		  
 		  <collision>
-		    <insert_block name="origin" />
+		  	<origin xyz="0 0 0.08" />
 		    <geometry>
 		      <box size="0.05 0.05 0.1" />
 		    </geometry>
 		  </collision>
     
       <inertial>
-        <mass value="0.01" />
-        <origin xyz="0 0 0" rpy="0 0 0" />
+		  	<origin xyz="0 0 0.08" />
+        <mass value="0.1" />
         <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
       </inertial>
     </link>
     
     <joint name="hokuyo_joint" type="fixed">
-      <axis xyz="0 1 0" />
-      <insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="hokuyo_link"/>
+      <axis xyz="0 1 0" />
+      <insert_block name="origin" />
     </joint>
     
     <!-- Gazebo elements -->

@@ -20,11 +20,13 @@
         args="-urdf -model Magabot -param robot_description"/>
 	
 	<group if="$(arg control)">
-  	<!-- ROS control file -->
+  	<!-- Launch ROS control -->
 		<include file="$(find mag_control)/launch/mag_control.launch" />
 		
+		<!-- Launch navigation -->
 		<include file="$(find mag_window)/launch/window.launch"/>
 		
+		<!-- Launch RVIZ -->
 		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_gazebo)/launch/rvizConfig.rviz"/>
   </group>
   
