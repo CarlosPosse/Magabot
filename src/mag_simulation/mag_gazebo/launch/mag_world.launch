@@ -1,6 +1,10 @@
 <launch>
-  
+	
+	<rosparam param="use_sim_time">true</rosparam>  
+
   <arg name="control" default="true"/>
+  <arg name="nav" default="true"/>
+  <arg name="joy" default="false"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -19,12 +23,19 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model Magabot -param robot_description"/>
 	
+	<group if="$(arg nav)">
+		<!-- Launch navigation -->
+		<include file="$(find mag_window)/launch/window.launch"/>
+	</group>
+
+	<group if="$(arg joy)">
+		<!-- Launch joystick -->
+		<include file="$(find xboxjoy)/launch/xboxjoy.launch"/>
+	</group>
+
 	<group if="$(arg control)">
   	<!-- Launch ROS control -->
 		<include file="$(find mag_control)/launch/mag_control.launch" />
-		
-		<!-- Launch navigation -->
-		<include file="$(find mag_window)/launch/window.launch"/>
 		
 		<!-- Launch RVIZ -->
 		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_gazebo)/launch/rvizConfig.rviz"/>

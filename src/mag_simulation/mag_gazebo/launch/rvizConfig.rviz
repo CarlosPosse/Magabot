@@ -112,7 +112,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 1.62551e-43
+      Max Intensity: 3.64982e-37
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
@@ -164,6 +164,14 @@ Visualization Manager:
       Shape: Arrow
       Topic: /move_base/current_goal
       Value: true
+    - Alpha: 0.4
+      Class: rviz/Map
+      Color Scheme: costmap
+      Draw Behind: false
+      Enabled: true
+      Name: Local Costmap
+      Topic: /move_base/local_costmap/costmap
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -195,10 +203,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.535398
+      Pitch: 0.500398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.0303929
+      Yaw: 6.01858
     Saved: ~
 Window Geometry:
   Displays:

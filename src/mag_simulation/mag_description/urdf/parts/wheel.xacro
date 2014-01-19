@@ -33,7 +33,7 @@
 		<joint name="base_${name}" type="continuous">
 		  <parent link="base_link"/>
 		  <child link="${name}"/>
-		  <axis xyz="1 0 0"/>
+		  <axis xyz="-1 0 0"/>
 		  <insert_block name="origin" />
 		</joint>
 		

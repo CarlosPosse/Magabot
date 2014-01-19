@@ -4,9 +4,9 @@
 #include <math.h>
 
 #define _USE_MATH_DEFINES
-#define pubName "joyControl"
+#define pubName "cmd_vel"
+#define subName "joy"
 
-// %Tag(CLASSDEF)%
 class XboxControl
 {
 public:
@@ -24,9 +24,7 @@ private:
   ros::Subscriber joy_sub_;
   
 };
-// %EndTag(CLASSDEF)%
 
-// %Tag(PARAMS)%
 XboxControl::XboxControl():
   linear_(1),
   angular_(1), 
@@ -38,11 +36,9 @@ XboxControl::XboxControl():
   nh_.param("axis_angular", angular_, angular_);
 
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>(pubName, 1);  
-  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &XboxControl::joyCallback, this);
+  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>(subName, 10, &XboxControl::joyCallback, this);
 }
-// %EndTag(PARAMS)%
 
-// %Tag(CALLBACK)%
 void XboxControl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist motors;
@@ -71,7 +67,7 @@ void XboxControl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
   vx = (((30.0/3900.0)/0.00332)*2.0*3.14159*0.0463)*lin;
   vy = 0;
-  wz= (((30.0/3900.0)/0.00332)*2.0*3.14159*0.0463)*(2/0.355)*ang;
+  wz= - (((30.0/3900.0)/0.00332)*2.0*3.14159*0.0463)*(2/0.355)*ang;
   
   motors.linear.x = vx;
   motors.linear.y = vy;
@@ -79,9 +75,7 @@ void XboxControl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 
   vel_pub_.publish(motors);
 }
-// %EndTag(CALLBACK)%
 
-// %Tag(MAIN)%
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "xboxControl");
@@ -89,5 +83,4 @@ int main(int argc, char** argv)
 
   ros::spin();
 }
-// %EndTag(MAIN)%
 

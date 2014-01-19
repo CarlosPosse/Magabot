@@ -8,8 +8,8 @@ magabot:
   leftControl:
     type: effort_controllers/JointPositionController
     joint: base_leftwheel
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 1.0, i: 0.1, d: 1.0}
   rightControl:
     type: effort_controllers/JointPositionController
     joint: base_rightwheel
-    pid: {p: 100.0, i: 0.01, d: 10.0}
+    pid: {p: 1.0, i: 0.1, d: 1.0}
