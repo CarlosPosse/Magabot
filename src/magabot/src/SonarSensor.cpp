@@ -1,49 +1,55 @@
 #include "ros/ros.h"
-#include "magabot/IRsensor.h"
+#include "magabot/msgSensor.h"
 #include <sensor_msgs/LaserScan.h>
 
-#define numReadings  171 // 170 + 1
-#define nodeName  "converterUS"
-#define subName  "rangeSom"
-#define subPubName  "/scanUS"
+#define nodeName "converterUS"
 
-#define frameId  "/laser_frameUS"
-#define angleMin  0 // graus
-#define angleMax  180 // graus
-#define timeIncrement  0.80 // segundos
-#define rangeMin  0.0 // metros
-#define rangeMax  1.0 // metros 
+#define subName "rangeSonar"
+#define subQueue 1000
+
+#define pubName "scanSonar"
+#define pubQueue 1000
+#define frameId "frameSonar"
+
+#define PI 3.14159
+#define DegToRad PI/180
+
+#define maxReadings 171 // Maximum number of readings 170+1
+#define angleMin 0 // (º)
+#define angleMax 180 // (º)
+#define timeIncrement 0.80 // (s)
+#define rangeMin 0.0 // (m)
+#define rangeMax 1.0 // (m) 
 
 class Listener{
 	private:
-		int num_leitura;
-		float distancia;		
-		bool endSweep;
-		float *dadosD;
-		
-		//ros::NodeHandle n;
+		int currRead; // Current reading
+		float distance; // Distance read
+		float *data; // Buffer of distances read
+		bool endSweep; // Bool to decide if a full sweep has been done
 
-		ros::Subscriber sub;
-		ros::Publisher scan_pub;
+		// Message to publish
+		sensor_msgs::LaserScan scanSonar;
 
-		sensor_msgs::LaserScan scan;
-		
-		
+		// Topic variables
+		ros::Subscriber subscriber;
+		ros::Publisher publisher;
+
+		// Topic functions
 		void addValue();
-
+		void callback(const magabot::msgSensor::ConstPtr& msg);
 		void publishMessage();
 		
 	public:
 		Listener();
 		~Listener();
 		
-		void init(int argc, char **argv);
-		void callback(const magabot::IRsensor::ConstPtr& msg);		
+		void init(int argc, char **argv);	
 		void run();
 };
 
 Listener::Listener(){
-	dadosD = (float*)malloc(numReadings*sizeof(float));
+	dadosD = (float*) malloc(numReadings * sizeof(float));
 }
 
 Listener::~Listener(){
@@ -54,29 +60,30 @@ void Listener::init(int argc, char **argv){
 	ros::init(argc, argv, nodeName);
 	ros::NodeHandle n;
 
-	sub = n.subscribe(subName, 1000, &Listener::callback, this);
-	scan_pub = n.advertise<sensor_msgs::LaserScan>(subPubName, 50);
+	subscriber = n.subscribe(subName, subQueue, &Listener::callback, this);
+	publisher = n.advertise<sensor_msgs::LaserScan>(subPubName, pubQueue);
 
-	scan.header.frame_id = frameId;
-	scan.angle_min = angleMin * (3.14/180);
-	scan.angle_max = angleMax * (3.14/180);
-	scan.angle_increment = ((angleMax - angleMin)*(3.14/180)) / (numReadings-1);
-	scan.time_increment = timeIncrement;
-	scan.range_min = rangeMin;
-	scan.range_max = rangeMax;
+	scanSonar.header.frame_id = frameId;
+	scanSonar.angle_min = angleMin * DegToRad;
+	scanSonar.angle_max = angleMax * DegToRad;
+	scanSonar.angle_increment = ((angleMax - angleMin)*DegToRad) / (numReadings-1);
+	scanSonar.time_increment = timeIncrement;
+	scanSonar.range_min = rangeMin;
+	scanSonar.range_max = rangeMax;
 }
 
-void Listener::callback(const magabot::IRsensor::ConstPtr& msg){
-	num_leitura =msg->numLeitura;
-	distancia=(msg->distancia)/100;
+void Listener::callback(const magabot::msgSensor::ConstPtr& msg){
+	currRead = msg->currRead;
+	distance = (msg->distance)/100;
 	addValue();	
 }
 
 void Listener::addValue(){ 
-	dadosD[num_leitura] = distancia;
-	if (num_leitura = numReadings){
+	data[numReadings] = distance;
+
+	if (currRead = maxReadings){
 		endSweep = true;
-	}else{
+	} else{
 		endSweep = false;
 	}
 }
@@ -85,28 +92,31 @@ void Listener::publishMessage(){
 	ros::Time scan_time = ros::Time::now();
 
 	//populate the LaserScan message  
-	scan.header.stamp = scan_time;
+	scanSonar.header.stamp = scan_time;
 	
-	scan.ranges.resize(numReadings);
-	scan.intensities.resize(numReadings);
+	scanSonar.ranges.resize(numReadings);
+	scanSonar.intensities.resize(numReadings);
+
 	for(unsigned int i = 0; i < numReadings; ++i){
-		scan.ranges[i] = dadosD[i];
-		scan.intensities[i] = 0;
+		scanSonar.ranges[i] = data[i];
+		scanSonar.intensities[i] = 0;
 	}
-	scan_pub.publish(scan);
+
+	publisher.publish(scanSonar);
 }
 
 void Listener::run(){
-	ros::Rate loop_rate(100);
-	while (ros::ok()){    
-		ros::spinOnce();
+	ros::Rate loopRate(100);
+
+  while (ros::ok()){    
+  	ros::spinOnce();
 
 		if(endSweep = true){
-			publishMessage();
+  		publishMessage();
 		}
 
-		loop_rate.sleep();
-	}
+  	loopRate.sleep();
+  }
 }
 
 // Main function
@@ -116,7 +126,7 @@ int main(int argc, char **argv)
 
 	listener.init(argc, argv);
 
-    	listener.run();
+	listener.run();
 
 	return 0;
 }

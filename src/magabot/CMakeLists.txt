@@ -22,11 +22,7 @@ add_message_files(
   motorClick.msg
   motorSpeed.msg
   magabotState.msg
- # Actuation.msg
- # Color.msg
- # Encoders.msg
- # Status.msg
- # Velocity.msg
+	msgSensor.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
