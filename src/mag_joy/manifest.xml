@@ -1,0 +1,17 @@
+<package>
+  <description brief="mag_joy">
+
+Implements a virtual joystick to send commands to the robot
+
+  </description>
+  <author>Jon Stephan</author>
+  <license>GNU GPL3</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/differential_drive</url>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+  <depend package="tf"/>
+
+</package>
+
+

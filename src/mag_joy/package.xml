@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>xboxjoy</name>
+  <name>mag_joy</name>
   <version>0.0.0</version>
-  <description>The xboxjoy package</description>
+  <description>Configuring joypads for magabot</description>
 
   <maintainer email="carlos@todo.todo">carlos</maintainer>
 

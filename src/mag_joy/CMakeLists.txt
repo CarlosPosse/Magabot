@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(xboxjoy)
+project(mag_joy)
 
 find_package(catkin REQUIRED COMPONENTS
   joy

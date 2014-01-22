@@ -1,4 +1,6 @@
 TrajectoryPlannerROS:
+  dwa: true
+
   # ROBOT CONFIGURATION
   min_vel_x: 0.02  # Minimum x velocity (m/s)
   max_vel_x: 0.3  # Maximum x velocity (m/s)
@@ -19,18 +21,18 @@ TrajectoryPlannerROS:
   # GOAL TOLERANCE
   yaw_goal_tolerance: 0.5  # Rotation tolerance to final goal (rad)
   xy_goal_tolerance: 0.2  # Meter tolerance to final goal (m)
-  latch_xy_goal_tolerance: true
+  latch_xy_goal_tolerance: false
 
   # FORWARD SIMULATION
-  sim_time: 1.5  # Time to forward-simulate trajectories (s)
+  sim_time: 2  # Time to forward-simulate trajectories (s)
   sim_granularity: 0.025  # Step size to take between points (m)
 
   vx_samples: 15  # Number of samples to use on the X velocity space
   vy_samples: 15  # Number of samples to use on the Y velocity space
-  vtheta_samples: 20  # Number of samples to use on the theta velocity space
+  vtheta_samples: 10  # Number of samples to use on the theta velocity space
   
   controller_frequency: 10  # Frequency at which to send commands (Hz)
-  penalize_negative_x: false  # Penalization of negative x velocities
+  penalize_negative_x: true  # Penalization of negative x velocities
   
   # TRAJECTORY SCORING
   meter_scoring: true  # Set if distance to goal is meters or cells
