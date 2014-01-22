@@ -4,12 +4,14 @@
 	<arg name="vjoy" default="false"/>
 	<arg name="switch" default="false"/>
 	
+	<machine name="raspberry" address="10.10.10.2"/>
+	
 	<!-- ....... MAGABOT CORE ....... -->
   <!-- ROSSERIAL -->
 	<group if="$(arg switch)">
-  	<node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1"/>
-  </group>
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" unless="$(arg switch)"/>
+		<node name="serial_node" machine="raspberry" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1"/>
+	</group>
+	<node name="serial_node" machine="raspberry" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" unless="$(arg switch)"/>
   
   <!-- Motor Control -->
   <node name="MotorControl" pkg="magabot" type="Control"/>
@@ -22,14 +24,14 @@
   <node name="laser_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0.0305 0.0871 0 0 0 1 base_link laser 100" />
   <node name="imu_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 -0.0721 0.072 0 0 0 1 base_link imu 100" />
 	
-	
+
 	<!-- ....... SENSORS ....... --> -->
 	<group if="$(arg nav)">
 		<!-- LASER SCAN -->
 		<group if="$(arg switch)">
-			<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM0"/>
+			<node name="laser" machine="raspberry" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM0"/>
 		</group>
-		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1" unless="$(arg switch)"/>
+		<node name="laser" machine="raspberry" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1" unless="$(arg switch)"/>
 		
 		<!-- WIIMOTE -->
 		<node name="wiimote" pkg="wiimote" type="wiimote_node.py">

@@ -1,8 +1,7 @@
-<!-- %Tag(FULL)%-->
 <launch>
 
  <!-- joy node -->
-  <node respawn="true" pkg="joy" type="joy_node" name="xboxjoy" >
+  <node respawn="true" pkg="joy" type="joy_node" name="joyInput" >
     <param name="dev" type="string" value="/dev/input/js0" />
     <param name="deadzone" value="0.12" />
   </node>
@@ -13,7 +12,6 @@
   <param name="scale_linear" value="2" type="double"/>
   <param name="scale_angular" value="2" type="double"/>
 
-  <node pkg="xboxjoy" type="xboxjoy_node" name="control"/>
+  <node pkg="mag_joy" type="mag_joy_node" name="joystick"/>
 
 </launch>
-<!-- %EndTag(FULL)%-->

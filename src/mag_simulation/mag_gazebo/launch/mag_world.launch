@@ -5,6 +5,7 @@
   <arg name="control" default="true"/>
   <arg name="nav" default="true"/>
   <arg name="joy" default="false"/>
+  <arg name="vjoy" default="false"/>
 	<arg name="rviz" default="true"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
@@ -31,7 +32,12 @@
 
 	<group if="$(arg joy)">
 		<!-- Launch joystick -->
-		<include file="$(find xboxjoy)/launch/xboxjoy.launch"/>
+		<include file="$(find mag_joy)/launch/mag_joy.launch"/>
+	</group>
+
+	<group if="$(arg vjoy)">
+		<!-- Launch virtual joystick -->
+		<node pkg="mag_joy" type="virtual_joystick.py" name="virtual_joystick" output="screen"/>
 	</group>
 
 	<group if="$(arg control)">
