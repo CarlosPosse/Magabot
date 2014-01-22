@@ -7,7 +7,6 @@
 		
 		<link name="caster"> <!-- Caster link -->
 			<visual>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
 				<geometry>
 					<cylinder length="${casterWidth}" radius="${casterRadius}"/>
 				</geometry>
@@ -15,16 +14,14 @@
 			</visual>
 			
 			<collision>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
 				<geometry>
 					<cylinder length="${casterWidth}" radius="${casterRadius}"/>
 				</geometry>
 			</collision>
 			
 			<inertial>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
-				<mass value="5"/>
-				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+				<mass value="0.0625"/>
+				<inertia ixx="0.00000791" ixy="0.0" ixz="0.0" iyy="0.00000791" iyz="0.0" izz="0.00001582"/>
 			</inertial>
 		</link>
 		
@@ -33,7 +30,7 @@
 		<joint name="base_caster" type="continuous">
 		  <parent link="base_link"/>
 		  <child link="caster"/>
-		  <axis xyz="1 0 0"/>
+		  <axis xyz="0 0 -1"/>
 		  <insert_block name="origin"/>
 		</joint>
 		

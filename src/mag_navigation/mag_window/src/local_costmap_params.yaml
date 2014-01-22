@@ -7,5 +7,9 @@ local_costmap:
   rolling_window: true
   width: 4.0
   height: 4.0
-  resolution: 0.01
+  resolution: 0.025
+  
+  # RATE
+  update_frequency: 10.0  # Frequency to update the map (Hz)
+  publish_frequency: 2.0  # Frequency to display the map (Hz)
   

@@ -5,13 +5,11 @@
 		
 		<!-- URDF description -->
 		
-		<link name="base_footprint"> <!-- Link to apply the base_footprint to base_link TF -->
-			<origin xyz="0 0 0" rpy="0 0 0" />
-		</link>
+		<link name="base_footprint"/> <!-- Link to apply the base_footprint to base_link TF -->
 		
 		<link name="base_link"> <!-- Main chassis link -->
 			<visual>
-				<origin xyz="0 0 ${height/2}"/>
+				<origin xyz="0 0 0"/>
 				<geometry>
 					<box size="${width} ${length} ${height}"/>
 				</geometry>
@@ -19,16 +17,16 @@
 			</visual>
 			
 			<collision>
-				<origin xyz="0 0 ${height/2}"/>
+				<origin xyz="0 0 0"/>
 				<geometry>
 					<box size="${width} ${length} ${height}"/>
 				</geometry>
 			</collision>
 			
 			<inertial>
-				<origin xyz="0 0 ${height/2}"/>
-				<mass value="20"/>
-				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+				<origin xyz="0 0 0"/>
+				<mass value="2.25"/>
+				<inertia ixx="0.02860811" ixy="0.0" ixz="0.0" iyy="0.065872155" iyz="0.0" izz="0.03901133"/>
 			</inertial>
 		</link>
 		

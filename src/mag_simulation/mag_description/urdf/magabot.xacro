@@ -13,12 +13,12 @@
   <xacro:property name="casterWidth" value="0.020"/> <!-- Width of non-motorized wheel -->
   
   <!-- Magabot TFs -->
-  <xacro:macro name="footprint_tf"> <origin xyz="0 0 0.0307" rpy="0 0 0"/> </xacro:macro>
-  <xacro:macro name="wheel_tf" params="reflect"> <origin xyz="${reflect*.1725} .0455 0.0143" rpy="0 0 0"/> </xacro:macro>
-  <xacro:macro name="caster_tf"> <origin xyz="0 -0.169 -0.0092" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="footprint_tf"> <origin xyz="0 0 ${height/2+0.0307}" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="wheel_tf" params="reflect"> <origin xyz="${reflect*.1725} .0455 ${-height/2+0.0143}" rpy="${PI/2} 0 ${PI/2}"/> </xacro:macro>
+  <xacro:macro name="caster_tf"> <origin xyz="0 -0.169 ${-height/2-0.0092}" rpy="${PI/2} 0 ${PI/2}"/> </xacro:macro>
   
   <!-- Sensor TFs -->
-  <xacro:macro name="hokuyo_tf"> <origin xyz="0 0.0305 ${height/2}" rpy="0 0 0"/> </xacro:macro>
+  <xacro:macro name="hokuyo_tf"> <origin xyz="0 0.0305 ${height/2+0.035}" rpy="0 0 ${PI/2}"/> </xacro:macro>
 	<xacro:macro name="wiimote_tf"> <origin xyz="0 -0.0721 ${height/2}" rpy="0 0 0"/> </xacro:macro>
 
   <!-- Import Gazebo plugins -->

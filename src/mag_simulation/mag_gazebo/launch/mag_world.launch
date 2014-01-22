@@ -5,6 +5,7 @@
   <arg name="control" default="true"/>
   <arg name="nav" default="true"/>
   <arg name="joy" default="false"/>
+	<arg name="rviz" default="true"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -36,9 +37,11 @@
 	<group if="$(arg control)">
   	<!-- Launch ROS control -->
 		<include file="$(find mag_control)/launch/mag_control.launch" />
-		
+  </group>
+
+	<group if="$(arg rviz)">
 		<!-- Launch RVIZ -->
 		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_gazebo)/launch/rvizConfig.rviz"/>
   </group>
-  
+
 </launch>

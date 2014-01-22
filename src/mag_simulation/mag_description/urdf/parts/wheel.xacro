@@ -7,7 +7,6 @@
 		
   	<link name="${name}"> <!-- Motorized wheel link -->
 			<visual>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
 				<geometry>
 					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
 				</geometry>
@@ -15,16 +14,14 @@
 			</visual>
 			
 			<collision>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
 				<geometry>
 					<cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
 				</geometry>
 			</collision>
 			
 			<inertial>
-				<origin rpy="${PI/2} 0 ${PI/2}"/>
-				<mass value="10"/>
-				<inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
+				<mass value="0.05"/>
+				<inertia ixx="0.000025313" ixy="0.0" ixz="0.0" iyy="0.000025313" iyz="0.0" izz="0.000050625"/>
 			</inertial>
 		</link>
 		
@@ -33,7 +30,7 @@
 		<joint name="base_${name}" type="continuous">
 		  <parent link="base_link"/>
 		  <child link="${name}"/>
-		  <axis xyz="-1 0 0"/>
+		  <axis xyz="0 0 -1"/>
 		  <insert_block name="origin" />
 		</joint>
 		
