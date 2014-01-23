@@ -1,12 +1,12 @@
 global_costmap:
   global_frame: /odom_combined
-  robot_base_frame: base_link
+  robot_base_frame: base_footprint
   
   # MAP MANAGEMENT
   static_map: false
   rolling_window: true
-  width: 10.0
-  height: 10.0
+  width: 8.0
+  height: 8.0
   resolution: 0.1
   
   # RATE

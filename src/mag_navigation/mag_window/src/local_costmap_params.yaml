@@ -1,6 +1,6 @@
 local_costmap:
   global_frame: /odom_combined
-  robot_base_frame: base_link
+  robot_base_frame: base_footprint
   
   # MAP MANAGEMENT
   static_map: false

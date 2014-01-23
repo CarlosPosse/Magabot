@@ -24,6 +24,6 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(mag_joy_node src/xboxjoy_node.cpp)
+add_executable(mag_joy_node src/mag_joy_node.cpp)
 
 target_link_libraries(mag_joy_node ${catkin_LIBRARIES} )
