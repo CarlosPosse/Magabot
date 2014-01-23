@@ -14,21 +14,21 @@
   <xacro:macro name="hokuyo_laser" params="parent *origin topic">
     <link name="hokuyo_base" type="laser">
 		  <visual>
-		  	<origin xyz="0 0 0" />
+		  	<origin xyz="0 0 -${laserHeight/2}" />
 		    <geometry>
 					<mesh filename="package://mag_description/meshes/hokuyo_laser.dae"/>
 		    </geometry>
 		  </visual>
 		  
 		  <collision>
-		  	<origin xyz="0 0 0" />
+		  	<origin xyz="0 0 -${laserHeight/2}" />
 		    <geometry>
 		      <box size="${laserWidth} ${laserLength} ${laserHeight}" />
 		    </geometry>
 		  </collision>
     
       <inertial>
-		  	<origin xyz="0 0 ${laserHeight/2}" />
+		  	<origin xyz="0 0 -${laserHeight/4}" />
         <mass value="0.1" />
         <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
       </inertial>

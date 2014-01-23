@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: /odom_combined
+  global_frame: odom_combined
   robot_base_frame: base_footprint
   
   # MAP MANAGEMENT
@@ -10,6 +10,6 @@ local_costmap:
   resolution: 0.025
   
   # RATE
-  update_frequency: 10.0  # Frequency to update the map (Hz)
-  publish_frequency: 2.0  # Frequency to display the map (Hz)
+  update_frequency: 5.0  # Frequency to update the map (Hz)
+  publish_frequency: 5.0  # Frequency to display the map (Hz)
   

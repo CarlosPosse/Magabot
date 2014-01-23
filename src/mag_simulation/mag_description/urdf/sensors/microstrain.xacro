@@ -4,8 +4,10 @@
 				xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
 				xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:property name="imuWidth" value="0.0173"/> <!-- Width of the base -->
-  <xacro:property name="imuLength" value="0.01585"/> <!-- Length of the base -->
+ <!-- <xacro:property name="imuWidth" value="0.0173"/> --> <!-- Width of the base -->
+ <!-- <xacro:property name="imuLength" value="0.01585"/> --> <!-- Length of the base -->
+  <xacro:property name="imuWidth" value="0.05"/> <!-- Width of the base -->
+  <xacro:property name="imuLength" value="0.15"/> <!-- Length of the base -->
   <xacro:property name="imuHeight" value="0.01241"/> <!-- Height -->
 
 	<!-- Include Gazebo element -->

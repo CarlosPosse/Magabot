@@ -106,7 +106,7 @@ Visualization Manager:
       Color: 25; 255; 0
       Enabled: true
       Name: Footprint
-      Topic: /move_base/local_costmap/footprint/footprint_stamped
+      Topic: /move_base/local_costmap/footprint_layer/footprint_stamped
       Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -123,7 +123,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0
+      Max Intensity: 9.0631e-38
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
@@ -217,7 +217,7 @@ Visualization Manager:
       Pitch: 0.815203
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 6.14358
+      Yaw: 3.58358
     Saved: ~
 Window Geometry:
   Displays:

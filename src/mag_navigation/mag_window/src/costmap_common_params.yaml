@@ -6,8 +6,8 @@ transform_tolerance: 0.5 # Delay with a tf not published (s)
 # COMMON
 max_obstacle_height: 0.3  # Maximum height of an obstacle (m)
 min_obstacle_height: 0.002  #
-#obstacle_range: 3.0  # Maximum distance for an obstacle to be inserted to the costmap
-#raytrace_range: 3.0  # Maximum distance to raytrace obstacles from the map
+obstacle_range: 3.0  # Maximum distance for an obstacle to be inserted to the costmap
+raytrace_range: 3.0  # Maximum distance to raytrace obstacles from the map
 
 # MAP TYPE
 #map_type: voxel  # costmap for 2D, voxel for 3D
@@ -24,7 +24,7 @@ map_type: costmap  # costmap for 2D, voxel for 3D
 track_unknown_space: true
 
 # ROBOT DESCRIPTION
-#footprint: [[-0.1923, -0.1855], [0, -0.02255], [-0.1923, 0.1855], [0.1923, 0.2255], [0.1923, -0.2255]]
+footprint: [[-0.2055, -0.1823], [-0.2455, 0], [-0.2055, 0.1823], [0.2155, 0.1823], [0.2155, -0.1823]]
 inflation_radius: 0.55
 
 # SENSOR MANAGEMENT
@@ -32,7 +32,7 @@ observation_sources: laser_scan
 
 laser_scan: {
   sensor_frame: hokuyo_link,
-  topic: /laser_scan,
+  topic: laser_scan,
   data_type: LaserScan,
   marking: true,
   clearing: true,

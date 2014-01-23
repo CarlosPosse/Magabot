@@ -1,14 +1,14 @@
 global_costmap:
-  global_frame: /odom_combined
+  global_frame: odom_combined
   robot_base_frame: base_footprint
   
   # MAP MANAGEMENT
   static_map: false
   rolling_window: true
-  width: 8.0
-  height: 8.0
-  resolution: 0.1
+  width: 10.0
+  height: 10.0
+  resolution: 0.5
   
   # RATE
-  update_frequency: 2.0  # Frequency to update the map (Hz)
+  update_frequency: 1.0  # Frequency to update the map (Hz)
   publish_frequency: 1.0  # Frequency to display the map (Hz)
