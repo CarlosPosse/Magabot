@@ -48,10 +48,10 @@
 		<!-- Gazebo elements -->
 		
 		<gazebo reference="${name}">
-		  <mu1>0.2</mu1>
-		  <mu2>0.2</mu2>
+		  <mu1>0.9</mu1>
+		  <mu2>0.9</mu2>
 		  <material>Gazebo/Blue</material>
 		</gazebo>
-		
   </xacro:macro>
+
 </robot>

@@ -23,7 +23,7 @@
 				<wheelSeparation>${wheelSep}</wheelSeparation>
 				<wheelDiameter>${wheelRad}</wheelDiameter>
 				
-				<torque>20</torque>
+				<torque>10</torque>
 				
 				<commandTopic>cmd_vel</commandTopic>
 				<odometryTopic>${topic}</odometryTopic>

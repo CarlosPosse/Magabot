@@ -46,6 +46,6 @@
 		<gazebo reference="base_link">
 		  <material>Gazebo/Orange</material>
 		</gazebo>
-		
   </xacro:macro>
+
 </robot>

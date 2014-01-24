@@ -5,15 +5,15 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   rosserial_arduino
-  tf
 	geometry_msgs
+  tf
 )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
-catkin_package( CATKIN_DEPENDS magabot move_base roscpp rospy rosserial_arduino tf geometry_msgs )
+catkin_package( CATKIN_DEPENDS magabot move_base roscpp rospy rosserial_arduino geometry_msgs tf )
 
 ###########
 ## Build ##

@@ -1,13 +1,43 @@
 TrajectoryPlannerROS:
-  max_vel_x: 0.45
-  min_vel_x: 0.1
-  max_rotational_vel: 3.0
-  min_in_place_rotational_vel: 0.2
 
-  acc_lim_th: 1
-  acc_lim_x: 0.2
-  acc_lim_y: 0.2
+  # ROBOT CONFIGURATION
+  min_vel_x: 0.1  # Minimum x velocity (m/s)
+  max_vel_x: 3.0  # Maximum x velocity (m/s)
+  min_vel_y: 0.1  # Minimum y velocity (m/s)
+  max_vel_y: 3.0  # Maximum y velocity (m/s)
+  min_in_place_rotational_vel: 0.017*2  # Minimum Angle velocity (rad/s)
+  max_rotational_vel: 1.5  # Maximum Angle velocity (rad/s)
 
-  holonomic_robot: true
+  acc_lim_x: 1.0  # Maximum x acceleration (m/s²)
+  acc_lim_y: 1.0  # Maximum y acceleration (m/s²)
+  acc_lim_th: 0.5  # Maximum Angle acceleration (rad/s²)
+
+  escape_vel: -0.3  # Speed when reversing from getting stuck
+  holonomic_robot: false  # Holonomic = move laterally
   
-  meter_scoring: true
+  # GOAL TOLERANCE
+  yaw_goal_tolerance: 0.017  # Rotation tolerance to final goal (rad)
+  xy_goal_tolerance: 0.05  # Meter tolerance to final goal (m)
+  latch_xy_goal_tolerance: true
+
+  # FORWARD SIMULATION
+  sim_time: 2.0  # Time to forward-simulate trajectories (s)
+  sim_granularity: 0.025  # Step size to take between points (m)
+  controller_frequency: 10.0  # Rate for the control loop and sending velocities (Hz)
+  vx_samples: 15  # Number of samples to use on the X velocity space
+  vtheta_samples: 15  # Number of samples to use on the theta velocity space
+
+  # TRAJECTORY SCORING
+  dwa: true
+  meter_scoring: true  # Set if distance to goal is meters or cells
+  #pdist_scale: 0.6  # Weight for staying close to the given path
+  #gdist_scale: 0.8  # Weight for attempting to reach local goal
+  #occdist_scale: 0.01  # Weight for attempting to avoid obstacles
+  #heading_lookahead: 0.325  # Distance to look ahead when scoring in place rotations
+  #heading_scoring: false  # Score based on heading to the path or distance from the path
+  #heading_scoring_timestep: 0.8  # Time to look ahead when using head_scoring
+  global_frame_id: odom_combined  # Frame to cost_cloud: Should be same as local map
+
+  # OSCILLATION PREVENTION
+  #oscillation_reset_dist: 0.2  # Reset oscillation flag distance
+

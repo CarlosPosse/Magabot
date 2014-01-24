@@ -2,25 +2,18 @@ cmake_minimum_required(VERSION 2.8.3)
 project(mag_slam)
 
 find_package(catkin REQUIRED COMPONENTS
-  joy
-  magabot
   roscpp
   rospy
   rosserial_arduino
+	geometry_msgs
   tf
-  urg_node
 )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES magabot_nav
-#  CATKIN_DEPENDS imu-drivers imu-tools joystick_drivers magabot move_base roscpp rospy rosserial tf urg_node xboxjoy
-#  DEPENDS system_lib
-)
+catkin_package( CATKIN_DEPENDS magabot move_base roscpp rospy rosserial_arduino geometry_msgs tf )
 
 ###########
 ## Build ##
@@ -30,3 +23,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_executable(Footprint src/Footprint.cpp)
+
+add_dependencies(Footprint ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(Footprint ${catkin_LIBRARIES})

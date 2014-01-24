@@ -1,17 +1,20 @@
 <launch>
-  <master auto="start"/>
-
-  <!-- Run the map server -->
-  <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find my_map_package)/my_map.pgm my_map_resolution"/> -->
-
-  <!--- Run AMCL -->
- <!-- <include file="$(find amcl)/examples/amcl_omni.launch" /> -->
-
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find mag_slam)/src/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find mag_slam)/src/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find mag_slam)/src/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find mag_slam)/src/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find mag_slam)/src/base_local_planner_params.yaml" command="load" />
+		<param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+    <rosparam file="$(find mag_window)/src/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find mag_window)/src/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find mag_window)/src/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mag_window)/src/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find mag_window)/src/base_local_planner_params.yaml" command="load" />
+		<rosparam file="$(find mag_window)/src/move_base_params.yaml" command="load" />
+		<remap from="odom" to="odom_combined"/>
   </node>
+
+	<!--<node pkg="mag_window" type="Footprint" name="global_footprint">
+		<remap from="footprint" to="move_base/global_costmap/footprint"/>
+	</node>
+
+	<node pkg="mag_window" type="Footprint" name="local_footprint">
+		<remap from="footprint" to="move_base/local_costmap/footprint"/>
+	</node>-->
 </launch>
