@@ -1,18 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(mag_gazebo)
+project(mag_description)
 
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+)
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES gazebo
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
-)
+catkin_package( CATKIN_DEPENDS roscpp rospy )
 
 ###########
 ## Build ##

@@ -10,7 +10,7 @@
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find mag_gazebo)/worlds/magabot.world"/>
+    <arg name="world_name" value="$(find mag_simulation)/worlds/magabot.world"/>
     <arg name="debug" value="false" />
     <arg name="gui" value="true" />
     <arg name="paused" value="false"/>
@@ -42,12 +42,12 @@
 
 	<group if="$(arg control)">
   	<!-- Launch ROS control -->
-		<include file="$(find mag_control)/launch/mag_control.launch" />
+		<include file="$(find mag_simulation)/launch/magabotControl.launch" />
   </group>
 
 	<group if="$(arg rviz)">
 		<!-- Launch RVIZ -->
-		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_gazebo)/launch/rvizConfig.rviz"/>
+		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_simulation)/config/magabotSim.rviz"/>
   </group>
 
 </launch>

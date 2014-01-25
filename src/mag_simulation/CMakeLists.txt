@@ -1,17 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(mag_description)
+project(mag_simulation)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-	geometry_msgs
 )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
-catkin_package( CATKIN_DEPENDS roscpp geometry_msgs )
+catkin_package( CATKIN_DEPENDS roscpp rospy )
 
 ###########
 ## Build ##
@@ -21,8 +20,3 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(Footprint src/Footprint.cpp)
-
-add_dependencies(Footprint ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(Footprint ${catkin_LIBRARIES})

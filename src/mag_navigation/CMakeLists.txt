@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
 	move_base
+	geometry_msgs
   tf
 )
 
@@ -12,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## catkin specific configuration ##
 ###################################
 
-catkin_package( CATKIN_DEPENDS roscpp rospy move_base tf )
+catkin_package( CATKIN_DEPENDS roscpp rospy move_base geometry_msgs tf )
 
 ###########
 ## Build ##
@@ -21,4 +22,10 @@ catkin_package( CATKIN_DEPENDS roscpp rospy move_base tf )
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(Footprint src/Footprint.cpp)
+
+add_dependencies(Footprint ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(Footprint ${catkin_LIBRARIES})
 
