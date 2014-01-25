@@ -12,7 +12,7 @@
   </node>
 
   <node pkg="gmapping" type="slam_gmapping" name="Magabot_gmapping" output="screen">        
-    <rosparam file="$(find mag_slam)/config_slam/gmapping_params.yaml" command="load" />
+    <rosparam file="$(find mag_navigation)/slam/gmapping_params.yaml" command="load" />
   </node>
 
 	<!--<node pkg="mag_description" type="Footprint" name="global_footprint">

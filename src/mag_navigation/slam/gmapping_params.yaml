@@ -54,3 +54,4 @@ occ_thresh: 0.25  # Threshold on occupancy values
 # TF CONFIGURATION
 transform_publish_period: 0.05  # Time between tf publication (s)
 
+
