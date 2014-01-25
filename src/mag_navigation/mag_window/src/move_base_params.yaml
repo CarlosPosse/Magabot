@@ -1,7 +1,0 @@
-controller_frequency: 10.0  # Rate for the control loop and sending velocities (Hz)
-planner_patience: 5.0 # Maximum planner time to find a valid plan before space-clearing (s)
-controller_patience: 15.0 # Maximum controller time to receive a plan before space-clearing (s)
-
-oscillation_timeout: 15.0  # Time allowing for oscillation before recovery (s)
-oscillation_distance: 0.1  # Minimum distance to not be considered oscillation (m)
-

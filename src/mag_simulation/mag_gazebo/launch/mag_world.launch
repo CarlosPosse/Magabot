@@ -27,7 +27,7 @@
 	
 	<group if="$(arg nav)">
 		<!-- Launch navigation -->
-		<include file="$(find mag_window)/launch/window.launch"/>
+		<include file="$(find mag_navigation)/launch/window.launch"/>
 	</group>
 
 	<group if="$(arg joy)">

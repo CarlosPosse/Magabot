@@ -1,12 +1,12 @@
 TrajectoryPlannerROS:
 
   # ROBOT CONFIGURATION
-  min_vel_x: 0.1  # Minimum x velocity (m/s)
+  min_vel_x: 0.05  # Minimum x velocity (m/s)
   max_vel_x: 3.0  # Maximum x velocity (m/s)
-  min_vel_y: 0.1  # Minimum y velocity (m/s)
+  min_vel_y: 0.05  # Minimum y velocity (m/s)
   max_vel_y: 3.0  # Maximum y velocity (m/s)
   min_in_place_rotational_vel: 0.017*2  # Minimum Angle velocity (rad/s)
-  max_rotational_vel: 1.5  # Maximum Angle velocity (rad/s)
+  max_rotational_vel: 0.017*60  # Maximum Angle velocity (rad/s)
 
   acc_lim_x: 1.0  # Maximum x acceleration (m/s²)
   acc_lim_y: 1.0  # Maximum y acceleration (m/s²)
@@ -24,16 +24,16 @@ TrajectoryPlannerROS:
   sim_time: 2.0  # Time to forward-simulate trajectories (s)
   sim_granularity: 0.025  # Step size to take between points (m)
   controller_frequency: 10.0  # Rate for the control loop and sending velocities (Hz)
-  vx_samples: 15  # Number of samples to use on the X velocity space
+  vx_samples: 12  # Number of samples to use on the X velocity space
   vtheta_samples: 15  # Number of samples to use on the theta velocity space
 
   # TRAJECTORY SCORING
   dwa: true
   meter_scoring: true  # Set if distance to goal is meters or cells
-  #pdist_scale: 0.6  # Weight for staying close to the given path
-  #gdist_scale: 0.8  # Weight for attempting to reach local goal
-  #occdist_scale: 0.01  # Weight for attempting to avoid obstacles
-  #heading_lookahead: 0.325  # Distance to look ahead when scoring in place rotations
+  pdist_scale: 1.7  # Weight for staying close to the given path
+  gdist_scale: 1.0  # Weight for attempting to reach local goal
+  occdist_scale: 1.0  # Weight for attempting to avoid obstacles
+  heading_lookahead: 0.5  # Distance to look ahead when scoring in place rotations
   #heading_scoring: false  # Score based on heading to the path or distance from the path
   #heading_scoring_timestep: 0.8  # Time to look ahead when using head_scoring
   global_frame_id: odom_combined  # Frame to cost_cloud: Should be same as local map

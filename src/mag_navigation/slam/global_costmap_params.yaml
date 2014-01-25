@@ -1,6 +1,5 @@
 global_costmap:
-  global_frame: odom_combined
-  robot_base_frame: base_footprint
+  global_frame: /map
   
   # MAP MANAGEMENT
   static_map: false

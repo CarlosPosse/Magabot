@@ -1,5 +1,4 @@
 # COORDINATE AND TF
-global_frame: odom_combined  # Global frame for the costmap
 robot_base_frame: base_footprint  # Frame for the base link of robot
 transform_tolerance: 0.5 # Delay with a tf not published (s)
 

@@ -1,0 +1,56 @@
+# ROBOT CONFIGURATION
+base_frame: base_footprint  # Base frame of the robot
+map_frame: map
+odom_frame: odom_combined
+
+# LASER CONFIGURATION
+maxUrange: 3.0  # Maximum laser range
+maxRange: 20.0  # Maxmum sensor range
+
+# MAP CONFIGURATION
+throttle_scans: 1  # Process 1 out of this number of scans
+map_update_interval: 5.0  # Time between updates to the map (s)
+sigma: 0.05  # Sigma for greedy endpoint matching
+kernelSize: 1  # Kernel to look for a correspondence
+
+lstep: 0.05  # Optimization step in translation
+astep: 0.05  # Optimization step in rotation
+iterations: 5  # Number of iterations in the scanmatcher
+
+lsigma: 0.075  # Sigma of a beam in likelihood computation
+ogain: 3.0  # Gain for evaluating likelihood, smoothing resampling
+
+lskip: 0  # Number of beams to skip in each scan
+
+# ODOMETRY CONFIGURATION
+srr: 0.1  # Odometry error in translation, respecting translation
+srt: 0.2  # Odometry error in translation, respecting rotation
+
+str: 0.1  # Odometry error in rotation, respecting translation
+stt: 0.2  # Odometry error in rotation, respecting rotation
+
+linearUpdate: 1.0  # Process a scan after this translation
+angularUpdate: 0.5  # Process a scan after this rotation
+temporalUpdate: -1.0  # Process a scan after this time (negative values disable this)
+
+# FILTER CONFIGURATION
+resampleThreshold: 0.5  # Neff based resampling threshold
+particles: 30  # Number of particles in the filter
+
+# INITIAL MAP SIZE & RESOLUTION
+xmin: -100.0
+ymin: -100.0
+xmax: 100.0
+ymax: 100.0
+delta: 0.05
+
+llsamplerange: 0.01  # Translational sampling range for likelihood
+llsamplestep: 0.01  # Translational smapling step for likelihood
+lasamplerange: 0.005  # Angular sampling rate for likelihood
+lasamplestep: 0.005  # Angular sampling step for likelihood
+
+occ_thresh: 0.25  # Threshold on occupancy values
+
+# TF CONFIGURATION
+transform_publish_period: 0.05  # Time between tf publication (s)
+
