@@ -1,0 +1,13 @@
+global_costmap:
+  global_frame: /map
+  
+  # MAP MANAGEMENT
+  static_map: false
+  rolling_window: true
+  width: 10.0
+  height: 10.0
+  resolution: 0.025
+  
+  # RATE
+  update_frequency: 1.0  # Frequency to update the map (Hz)
+  publish_frequency: 1.0  # Frequency to display the map (Hz)

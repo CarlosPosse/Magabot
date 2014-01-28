@@ -11,8 +11,9 @@
 		<remap from="odom" to="odom_combined" />
   </node>
 
-  <node pkg="gmapping" type="slam_gmapping" name="Magabot_gmapping" output="screen">        
+  <node pkg="gmapping" type="slam_gmapping" name="Magabot_gmapping" output="screen">
     <rosparam file="$(find mag_navigation)/slam/gmapping_params.yaml" command="load" />
+		<remap from="scan" to="laser_scan" />
   </node>
 
 	<!--<node pkg="mag_description" type="Footprint" name="global_footprint">

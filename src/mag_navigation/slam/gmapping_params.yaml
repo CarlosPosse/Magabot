@@ -1,11 +1,11 @@
 # ROBOT CONFIGURATION
-base_frame: base_footprint  # Base frame of the robot
-map_frame: map
-odom_frame: odom_combined
+base_frame: /base_footprint  # Base frame of the robot
+map_frame: /map
+odom_frame: /odom_combined
 
 # LASER CONFIGURATION
 maxUrange: 3.0  # Maximum laser range
-maxRange: 4.0  # Maxmum sensor range
+maxRange: 4.0  # Maximum sensor range
 
 # MAP CONFIGURATION
 throttle_scans: 1  # Process 1 out of this number of scans
@@ -42,7 +42,7 @@ xmin: -100.0
 ymin: -100.0
 xmax: 100.0
 ymax: 100.0
-delta: 0.05
+delta: 0.025
 
 llsamplerange: 0.01  # Translational sampling range for likelihood
 llsamplestep: 0.01  # Translational smapling step for likelihood
