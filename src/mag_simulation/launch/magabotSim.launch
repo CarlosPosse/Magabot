@@ -3,7 +3,9 @@
 	<rosparam param="use_sim_time">true</rosparam>  
 
   <arg name="control" default="true"/>
-  <arg name="nav" default="true"/>
+  <arg name="window" default="false"/>
+  <arg name="slam" default="false"/>
+  <arg name="static" default="false"/>
   <arg name="joy" default="false"/>
   <arg name="vjoy" default="false"/>
 	<arg name="rviz" default="true"/>
@@ -25,29 +27,21 @@
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model Magabot -param robot_description"/>
 	
-	<group if="$(arg nav)">
-		<!-- Launch navigation -->
-		<include file="$(find mag_navigation)/launch/window.launch"/>
-	</group>
+	<!-- Launch navigation -->
+	<include file="$(find mag_navigation)/launch/window.launch" if="$(arg window)"/>
+	<include file="$(find mag_navigation)/launch/slam.launch" if="$(arg slam)"/>
+	<include file="$(find mag_navigation)/launch/static.launch" if="$(arg static)"/>
 
-	<group if="$(arg joy)">
-		<!-- Launch joystick -->
-		<include file="$(find mag_joy)/launch/mag_joy.launch"/>
-	</group>
+	<!-- Launch joystick -->
+	<include file="$(find mag_joy)/launch/mag_joy.launch" if="$(arg joy)"/>
 
-	<group if="$(arg vjoy)">
-		<!-- Launch virtual joystick -->
-		<node pkg="mag_joy" type="virtual_joystick.py" name="virtual_joystick" output="screen"/>
-	</group>
+	<!-- Launch virtual joystick -->
+	<node pkg="mag_joy" type="virtual_joystick.py" name="virtual_joystick" output="screen" if="$(arg vjoy)"/>
 
-	<group if="$(arg control)">
-  	<!-- Launch ROS control -->
-		<include file="$(find mag_simulation)/launch/magabotControl.launch" />
-  </group>
+	<!-- Launch ROS control -->
+	<include file="$(find mag_simulation)/launch/magabotControl.launch" if="$(arg control)"/>
 
-	<group if="$(arg rviz)">
-		<!-- Launch RVIZ -->
-		<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_simulation)/config/magabotSim.rviz"/>
-  </group>
+	<!-- Launch RVIZ -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_simulation)/config/magabotSim.rviz" if="$(arg rviz)"/>
 
 </launch>

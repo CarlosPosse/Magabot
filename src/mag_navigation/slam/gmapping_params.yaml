@@ -5,7 +5,7 @@ odom_frame: odom_combined
 
 # LASER CONFIGURATION
 maxUrange: 3.0  # Maximum laser range
-maxRange: 20.0  # Maxmum sensor range
+maxRange: 4.0  # Maxmum sensor range
 
 # MAP CONFIGURATION
 throttle_scans: 1  # Process 1 out of this number of scans
