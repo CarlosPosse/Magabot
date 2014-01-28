@@ -1,4 +1,6 @@
 <launch>
+	<arg name="rviz" default="false"/>
+
   <!-- Load the URDF into the ROS Parameter Server -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find mag_description)/urdf/magabot.xacro'" />
 	
@@ -8,5 +10,5 @@
   <!-- Combine joint values -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 	
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_description)/config/magabotModel.rviz" />
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_description)/config/magabotModel.rviz" if="$(arg rviz)" />
 </launch>

@@ -1,3 +1,0 @@
-int16 motorRight
-int16 motorLeft
-ros::Time currentTime

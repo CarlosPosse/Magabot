@@ -5,11 +5,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   rosserial_arduino
-  message_generation
   std_msgs
-  nav_msgs
-  geometry_msgs
-  tf
+  message_generation
 )
 
 ################################################
@@ -19,27 +16,25 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  motorClick.msg
-  motorSpeed.msg
-  magabotState.msg
-	msgSensor.msg
+  Encoders.msg
+  Velocity.msg
+  Color.msg
+  Status.msg
+  Actuation.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
   std_msgs
-  nav_msgs
-  geometry_msgs
-  tf
 )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
-catkin_package(
-  CATKIN_DEPENDS roscpp rospy rosserial_arduino message_runtime std_msgs nav_msgs geometry_msgs tf
+catkin_package( LIBRARIES magabot
+   CATKIN_DEPENDS roscpp rospy rosserial_arduino std_msgs message_runtime
 )
 
 ###########
@@ -50,12 +45,11 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(Control src/Control.cpp)
 add_executable(Odometry src/Odometry.cpp)
-
-add_dependencies(Control ${catkin_EXPORTED_TARGETS})
+target_link_libraries(Odometry ${catkin_LIBRARIES})
 add_dependencies(Odometry ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(Control ${catkin_LIBRARIES})
-target_link_libraries(Odometry ${catkin_LIBRARIES})
+add_executable(Controller src/Controller.cpp)
+target_link_libraries(Controller ${catkin_LIBRARIES})
+add_dependencies(Controller ${catkin_EXPORTED_TARGETS})
 

@@ -8,22 +8,18 @@
 	
 	<!-- ....... MAGABOT CORE ....... -->
   <!-- ROSSERIAL -->
-	<group if="$(arg switch)">
-		<node name="serial_node" machine="raspberry" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1"/>
-	</group>
+	<node name="serial_node" machine="raspberry" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1" if="$(arg switch)"/>
 	<node name="serial_node" machine="raspberry" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" unless="$(arg switch)"/>
   
   <!-- Motor Control -->
-  <node name="MotorControl" pkg="magabot" type="Control"/>
+  <node name="Controller" pkg="magabot" type="Controller"/>
   
   <!-- Motor Odometry -->
-  <node name="MotorOdomotery" pkg="magabot" type="Odometry" />
+  <node name="Odomotery" pkg="magabot" type="Odometry" />
   
   <!-- TFs -->
-  <node name="base_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0.050825 0 0 0 1 base_footprint base_link 100" />
-  <node name="laser_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0.0305 0.0871 0 0 0 1 base_link laser 100" />
-  <node name="imu_tf_broadcaster" pkg="tf" type="static_transform_publisher" args="0 -0.0721 0.072 0 0 0 1 base_link imu 100" />
-	
+	<include file="$(find mag_description)/launch/magabotURDF.launch"/>
+
 
 	<!-- ....... SENSORS ....... --> -->
 	<group if="$(arg nav)">
