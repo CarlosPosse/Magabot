@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<robot name="magabot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="PI" value="3.14159"/>
+  <xacro:property name="width" value="0.5"/>
+  <xacro:property name="height" value="2.0"/>
+
+  <!-- Wall Macro -->
+  <xacro:macro name="wall" params="location length *origin">
+		<link name="${location}_wall">
+			<visual>
+				<origin xyz="0 0 0"/>
+				<geometry>
+					<box size="${width} ${length} ${height}"/>
+				</geometry>
+				<material name="orange"/>
+			</visual>
+			
+			<collision>
+				<origin xyz="0 0 0"/>
+				<geometry>
+					<box size="${width} ${length} ${height}"/>
+				</geometry>
+			</collision>
+			
+			<inertial>
+				<origin xyz="0 0 0"/>
+				<mass value="1000"/>
+				<inertia ixx="100.0" ixy="0.0" ixz="0.0" iyy="100.0" iyz="0.0" izz="100.0"/>
+			</inertial>
+		</link>
+
+		<!-- Joint -->
+		
+		<joint name="${location}_joint" type="fixed">
+			<parent link="base"/>
+			<child link="${location}_wall"/>
+			<axis xyz="1 0 0"/>
+		  <insert_block name="origin" />
+		</joint>
+		
+		<!-- Gazebo elements -->
+
+		<gazebo reference="${location}_wall">
+		  <material>Gazebo/Orange</material>
+		</gazebo>
+  </xacro:macro>
+
+	<!-- Base link to parent all walls -->
+	<link name="base"/>
+
+	<!-- TOP ROOM -->
+	
+	<xacro:wall location="room_top" length="11">
+		<origin xyz="0 7 0" rpy="0 0 ${PI/2}"/>
+	</xacro:wall>
+
+	<xacro:wall location="room_left" length="3">
+		<origin xyz="-5.5 5.5 0" rpy="0 0 0"/>
+	</xacro:wall>
+
+	<xacro:wall location="room_right" length="3">
+		<origin xyz="5.5 5.5 0" rpy="0 0 0"/>
+	</xacro:wall>
+
+	<xacro:wall location="room_bot_left" length="3">
+		<origin xyz="-4 4 0" rpy="0 0 ${PI/2}"/>
+	</xacro:wall>
+
+	<xacro:wall location="room_bot_right" length="3">
+		<origin xyz="4 4 0" rpy="0 0 ${PI/2}"/>
+	</xacro:wall>
+
+	<!-- HALLWAY -->
+
+	<xacro:wall location="left" length="8">
+		<origin xyz="-2.5 0 0" rpy="0 0 0"/>
+	</xacro:wall>
+
+	<xacro:wall location="right" length="8">
+		<origin xyz="2.5 0 0" rpy="0 0 0"/>
+	</xacro:wall>
+
+	<xacro:wall location="bottom" length="5">
+		<origin xyz="0 -4 0" rpy="0 0 ${PI/2}"/>
+	</xacro:wall>
+
+	<!-- BOTTOM SEPARATOR -->
+
+	<xacro:wall location="center" length="3">
+		<origin xyz="0 -2.5 0" rpy="0 0 0"/>
+	</xacro:wall>
+
+</robot>
+

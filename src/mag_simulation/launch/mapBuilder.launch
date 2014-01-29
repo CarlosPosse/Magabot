@@ -2,17 +2,11 @@
 	
 	<rosparam param="use_sim_time">true</rosparam>
 
-  <arg name="control" default="true"/>
-  <arg name="window" default="false"/>
-  <arg name="slam" default="false"/>
-  <arg name="static" default="false"/>
   <arg name="joy" default="false"/>
   <arg name="vjoy" default="false"/>
-	<arg name="rviz" default="true"/>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find mag_simulation)/worlds/gas_station.world"/>
     <arg name="debug" value="false" />
     <arg name="gui" value="true" />
     <arg name="paused" value="false"/>
@@ -24,13 +18,18 @@
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find mag_description)/urdf/magabot.xacro'" />
 
   <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
-  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+  <node name="magabot_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model Magabot -param robot_description"/>
+
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="room_description" command="$(find xacro)/xacro.py '$(find mag_simulation)/models/rect_room/rect_room.xacro'" />
+
+  <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  <node name="room_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+        args="-urdf -model Rect_room -param room_description"/>
 	
-	<!-- Launch navigation -->
-	<include file="$(find mag_navigation)/launch/window.launch" if="$(arg window)"/>
-	<include file="$(find mag_navigation)/launch/slam.launch" if="$(arg slam)"/>
-	<include file="$(find mag_navigation)/launch/static.launch" if="$(arg static)"/>
+	<!-- Launch SLAM navigation -->
+	<include file="$(find mag_navigation)/launch/slam.launch"/>
 
 	<!-- Launch joystick -->
 	<include file="$(find mag_joy)/launch/mag_joy.launch" if="$(arg joy)"/>
@@ -39,9 +38,9 @@
 	<node pkg="mag_joy" type="virtual_joystick.py" name="virtual_joystick" output="screen" if="$(arg vjoy)"/>
 
 	<!-- Launch ROS control -->
-	<include file="$(find mag_simulation)/launch/magabotControl.launch" if="$(arg control)"/>
+	<include file="$(find mag_simulation)/launch/magabotControl.launch"/>
 
 	<!-- Launch RVIZ -->
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_simulation)/config/magabotSim.rviz" if="$(arg rviz)"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find mag_simulation)/config/slam.rviz"/>
 
 </launch>
