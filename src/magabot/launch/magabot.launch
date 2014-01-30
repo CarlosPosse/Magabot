@@ -1,6 +1,9 @@
 <launch>
-  <!-- ROSSERIAL -->
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0"/>
+  <!-- Rosserial for motors -->
+  <node name="motor_arduino" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0"/>
+
+  <!-- Rosserial for imu -->
+  <node name="imu_arduino" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1"/>
   
   <!-- MOTOR CONTROL -->
   <node name="Controller" pkg="magabot" type="Controller"/>

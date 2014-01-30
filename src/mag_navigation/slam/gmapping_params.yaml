@@ -9,7 +9,7 @@ maxRange: 4.0  # Maximum sensor range
 
 # MAP CONFIGURATION
 throttle_scans: 1  # Process 1 out of this number of scans
-map_update_interval: 1.0  # Time between updates to the map (s)
+map_update_interval: 30.0  # Time between updates to the map (s)
 sigma: 0.05  # Sigma for greedy endpoint matching
 kernelSize: 1  # Kernel to look for a correspondence
 
@@ -31,23 +31,23 @@ stt: 0.02  # Odometry error in rotation, respecting rotation
 
 linearUpdate: 0.1  # Process a scan after this translation
 angularUpdate: 0.2  # Process a scan after this rotation
-temporalUpdate: 2.0  # Process a scan after this time (negative values disable this)
+temporalUpdate: -1.0  # Process a scan after this time (negative values disable this)
 
 # FILTER CONFIGURATION
 resampleThreshold: 0.5  # Neff based resampling threshold
-particles: 30  # Number of particles in the filter
+particles: 100  # Number of particles in the filter
 
 # INITIAL MAP SIZE & RESOLUTION
-xmin: -100.0
-ymin: -100.0
-xmax: 100.0
-ymax: 100.0
+xmin: -1.0
+ymin: -1.0
+xmax: 50.0
+ymax: 50.0
 delta: 0.025
 
-llsamplerange: 0.025  # Translational sampling range for likelihood
-llsamplestep: 0.025  # Translational smapling step for likelihood
-lasamplerange: 0.02  # Angular sampling rate for likelihood
-lasamplestep: 0.02  # Angular sampling step for likelihood
+llsamplerange: 0.01  # Translational sampling range for likelihood
+llsamplestep: 0.01  # Translational sampling step for likelihood
+lasamplerange: 0.005  # Angular sampling rate for likelihood
+lasamplestep: 0.005  # Angular sampling step for likelihood
 
 occ_thresh: 0.25  # Threshold on occupancy values
 
