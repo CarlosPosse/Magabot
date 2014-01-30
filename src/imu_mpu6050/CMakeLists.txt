@@ -45,5 +45,5 @@ include_directories(
 
 add_executable(IMU src/IMU.cpp)
 target_link_libraries(IMU ${catkin_LIBRARIES})
-add_dependencies(IMU ${catkin_EXPORTED_TARGETS})
+add_dependencies(IMU imu_mpu6050_generate_messages_cpp)
 

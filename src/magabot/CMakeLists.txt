@@ -47,9 +47,9 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(Odometry src/Odometry.cpp)
 target_link_libraries(Odometry ${catkin_LIBRARIES})
-add_dependencies(Odometry ${catkin_EXPORTED_TARGETS})
+add_dependencies(Odometry magabot_generate_messages_cpp)
 
 add_executable(Controller src/Controller.cpp)
 target_link_libraries(Controller ${catkin_LIBRARIES})
-add_dependencies(Controller ${catkin_EXPORTED_TARGETS})
+add_dependencies(Controller magabot_generate_messages_cpp)
 
