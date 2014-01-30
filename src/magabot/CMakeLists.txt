@@ -14,36 +14,39 @@ find_package(catkin REQUIRED COMPONENTS
 ################################################
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  Encoders.msg
-  Velocity.msg
-  Color.msg
-  Status.msg
-  Actuation.msg
-)
+  add_message_files(
+    FILES
+    Encoders.msg
+    Velocity.msg
+    Color.msg
+    Status.msg
+    Actuation.msg
+    Quaternion_32.msg
+    Vector3_32.msg
+	  Inertial.msg
+  )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
+  generate_messages(
+    DEPENDENCIES
+    std_msgs
+  )
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 
 catkin_package( LIBRARIES magabot
-   CATKIN_DEPENDS roscpp rospy rosserial_arduino std_msgs message_runtime
+   CATKIN_DEPENDS roscpp rospy rosserial_arduino std_msgs message_generation
 )
 
 ###########
 ## Build ##
 ###########
 
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+include_directories( ${catkin_INCLUDE_DIRS} )
+
+include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(Odometry src/Odometry.cpp)
 target_link_libraries(Odometry ${catkin_LIBRARIES})

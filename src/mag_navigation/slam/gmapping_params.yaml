@@ -9,7 +9,7 @@ maxRange: 4.0  # Maximum sensor range
 
 # MAP CONFIGURATION
 throttle_scans: 1  # Process 1 out of this number of scans
-map_update_interval: 3.0  # Time between updates to the map (s)
+map_update_interval: 1.0  # Time between updates to the map (s)
 sigma: 0.05  # Sigma for greedy endpoint matching
 kernelSize: 1  # Kernel to look for a correspondence
 
@@ -23,14 +23,14 @@ ogain: 3.0  # Gain for evaluating likelihood, smoothing resampling
 lskip: 0  # Number of beams to skip in each scan
 
 # ODOMETRY CONFIGURATION
-srr: 0.1  # Odometry error in translation, respecting translation
-srt: 0.2  # Odometry error in translation, respecting rotation
+srr: 0.01  # Odometry error in translation, respecting translation
+srt: 0.02  # Odometry error in translation, respecting rotation
 
-str: 0.1  # Odometry error in rotation, respecting translation
-stt: 0.2  # Odometry error in rotation, respecting rotation
+str: 0.01  # Odometry error in rotation, respecting translation
+stt: 0.02  # Odometry error in rotation, respecting rotation
 
-linearUpdate: 0.5  # Process a scan after this translation
-angularUpdate: 0.5  # Process a scan after this rotation
+linearUpdate: 0.1  # Process a scan after this translation
+angularUpdate: 0.2  # Process a scan after this rotation
 temporalUpdate: 2.0  # Process a scan after this time (negative values disable this)
 
 # FILTER CONFIGURATION
@@ -44,10 +44,10 @@ xmax: 100.0
 ymax: 100.0
 delta: 0.025
 
-llsamplerange: 0.01  # Translational sampling range for likelihood
-llsamplestep: 0.01  # Translational smapling step for likelihood
-lasamplerange: 0.005  # Angular sampling rate for likelihood
-lasamplestep: 0.005  # Angular sampling step for likelihood
+llsamplerange: 0.025  # Translational sampling range for likelihood
+llsamplestep: 0.025  # Translational smapling step for likelihood
+lasamplerange: 0.02  # Angular sampling rate for likelihood
+lasamplestep: 0.02  # Angular sampling step for likelihood
 
 occ_thresh: 0.25  # Threshold on occupancy values
 

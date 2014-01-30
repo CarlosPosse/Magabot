@@ -6,86 +6,50 @@
 
 #define _USE_MATH_DEFINES
 
-#define NODE_NAME "Odometry"
+const char* NODE_NAME = "odometryCalculator";
 
-#define PUB_NAME "odom"
-#define PUB_QUEUE_SIZE 1000
-#define PUB_RATE 100
+const char* PUB_NAME = "odom";
+const unsigned int PUB_QUEUE_SIZE = 1000;
+const unsigned int PUB_RATE = 100;
 
-#define SUB_NAME "/magabot/Status"
-#define SUB_QUEUE_SIZE 1000
+const char* SUB_NAME = "/magabot/Status";
+const unsigned int SUB_QUEUE_SIZE = 1000;
 
-#define ODOM_FRAME_ID "odom"
-#define ODOM_CHILD_FRAME_ID "base_link"
+const char* ODOM_FRAME_ID = "odom";
+const char* ODOM_CHILD_FRAME_ID = "base_link";
 
-#define DISTANCE 0.345
-#define RADIUS 0.045
-#define TICKS_PER_REV 3900
+const float DISTANCE = 0.345;
+const float RADIUS = 0.045;
+const float TICKS_REVOLUTION = 3900;
 
-#define K_TH 2 * M_PI * RADIUS / (DISTANCE * TICKS_PER_REV)
-#define K_XY RADIUS * M_PI / TICKS_PER_REV
+const float K_TH = 2 * M_PI * RADIUS / (DISTANCE * TICKS_REVOLUTION);
+const float K_XY = RADIUS * M_PI / TICKS_REVOLUTION;
 
-class Listener
+ros::Subscriber sub;
+ros::Publisher pub;
+
+void callback(const magabot::Status::ConstPtr& msg)
 {
-	private:
-		int left_wheel_ticks;
-		int right_wheel_ticks;
 
-		double v_x;
-		double v_y;
-		double w_z;
+	int left_wheel_ticks;
+	int right_wheel_ticks;
 
-		double x;
-		double y;
-		double th;
+	double v_x;
+	double v_y;
+	double w_z;
 
-		double dt;
+	double x;
+	double y;
+	double th;
 
-		nav_msgs::Odometry odom;
+	double dt;
 
-		ros::Time time_stamp;
+	nav_msgs::Odometry odom;
 
-		geometry_msgs::Quaternion odom_quaternion;
+	ros::Time time_stamp;
 
-		ros::Subscriber subscriber;
-		ros::Publisher publisher;
+	geometry_msgs::Quaternion odom_quaternion;
 
-		void publish();
-		void callback(const magabot::Status::ConstPtr& msg);
-
-	public:
-		Listener();
-		void init(int argc, char **argv);
-		void run();
-};
-
-Listener::Listener()
-{
-	left_wheel_ticks = 0;
-	right_wheel_ticks = 0;
-
-	v_x = 0.0;
-	v_y = 0.0;
-	w_z = 0.0;
-
-	x = 0.0;
-	y = 0.0;
-	th = 0.0;  
-
-	dt = 0.0;
-}
-
-void Listener::init(int argc, char **argv)
-{
-	ros::init(argc, argv, NODE_NAME);
-	ros::NodeHandle nh;
-
-	subscriber = nh.subscribe(SUB_NAME, SUB_QUEUE_SIZE, &Listener::callback, this);
-	publisher = nh.advertise<nav_msgs::Odometry>(PUB_NAME, PUB_QUEUE_SIZE);
-}
-
-void Listener::callback(const magabot::Status::ConstPtr& msg)
-{
 	right_wheel_ticks = msg->encoders.right_wheel;
 	left_wheel_ticks = msg->encoders.left_wheel;
 	dt = msg->timestamp.toSec() - dt;
@@ -101,19 +65,13 @@ void Listener::callback(const magabot::Status::ConstPtr& msg)
 	v_x = double(delta_x / dt);
 	v_y = double(delta_y / dt);
 	w_z = double(delta_th / dt);
-	odom_quaternion = tf::createQuaternionMsgFromYaw(th);
-}
-
-void Listener::publish()
-{
-	time_stamp = ros::Time::now();
 
 	odom.header.stamp = ros::Time::now();
 	odom.header.frame_id = ODOM_FRAME_ID;
 
 	odom.pose.pose.position.x = x;
 	odom.pose.pose.position.y = y;
-	odom.pose.pose.orientation = odom_quaternion;
+	odom.pose.pose.orientation = tf::createQuaternionMsgFromYaw(th);
 
 	odom.child_frame_id = ODOM_CHILD_FRAME_ID;
 	odom.twist.twist.linear.x = v_x;
@@ -129,25 +87,20 @@ void Listener::publish()
 
 	odom.twist.covariance = odom.pose.covariance;
 
-	publisher.publish(odom);
-}
-
-void Listener::run()
-{
-	ros::Rate loopRate(PUB_RATE);
-
-	while (ros::ok()) {
-		ros::spinOnce();
-		publish();
-		loopRate.sleep();
-	}
+	pub.publish(odom);
 }
 
 int main(int argc, char **argv)
 {
-	Listener listener;
-	listener.init(argc, argv);
-	listener.run();
+	ros::init(argc, argv, NODE_NAME);
+
+	ros::NodeHandle nh;
+
+	pub = nh.advertise<nav_msgs::Odometry>(PUB_NAME, PUB_QUEUE_SIZE);
+
+	sub = nh.subscribe(SUB_NAME, SUB_QUEUE_SIZE, callback);
+
+	ros::spin();
 
 	return 0;
 }
