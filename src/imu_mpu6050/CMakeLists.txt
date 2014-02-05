@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
     FILES
     Quaternion_32.msg
     Vector3_32.msg
-	  Inertial.msg
+	imu_raw.msg
   )
 
 ## Generate added messages and services with any dependencies listed here
@@ -43,7 +43,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(IMU src/IMU.cpp)
-target_link_libraries(IMU ${catkin_LIBRARIES})
-add_dependencies(IMU imu_mpu6050_generate_messages_cpp)
+add_executable(ConvertIMU src/ConvertIMU.cpp)
+target_link_libraries(ConvertIMU ${catkin_LIBRARIES})
+add_dependencies(ConvertIMU imu_mpu6050_generate_messages_cpp)
 

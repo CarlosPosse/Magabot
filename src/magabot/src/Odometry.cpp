@@ -10,13 +10,13 @@ const char* NODE_NAME = "odometryCalculator";
 
 const char* PUB_NAME = "odom";
 const unsigned int PUB_QUEUE_SIZE = 1000;
-const unsigned int PUB_RATE = 100;
+const unsigned int PUB_RATE = 80;
 
 const char* SUB_NAME = "/magabot/Status";
 const unsigned int SUB_QUEUE_SIZE = 1000;
 
 const char* ODOM_FRAME_ID = "odom";
-const char* ODOM_CHILD_FRAME_ID = "base_link";
+const char* ODOM_CHILD_FRAME_ID = "base_footprint";
 
 const float DISTANCE = 0.345;
 const float RADIUS = 0.045;

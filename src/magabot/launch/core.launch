@@ -1,35 +1,30 @@
 <launch>
-	<arg name="nav" default="true"/>
+	<arg name="laser" default="true"/>
 	<arg name="joy" default="false"/>
 	<arg name="vjoy" default="false"/>
-	<arg name="switch" default="false"/>
 	
 	<!-- ....... MAGABOT CORE ....... -->
   <!-- ROSSERIAL -->
-	<node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM1" if="$(arg switch)"/>
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="_port:=/dev/ttyACM0" unless="$(arg switch)"/>
+	<node name="serial_mag" pkg="rosserial_server" type="serial_node" args="_port:=/dev/arduino_Magabot" />
+  <node name="serial_imu" pkg="rosserial_server" type="serial_node" args="_port:=/dev/arduino_IMU" />
   
   <!-- Motor Control -->
   <node name="Controller" pkg="magabot" type="Controller"/>
   
   <!-- Motor Odometry -->
   <node name="Odomotery" pkg="magabot" type="Odometry" />
+
+	<!-- IMU Node -->
+	<node name="Imu" pkg="imu_mpu6050" type="ConvertIMU" />
   
 	<!-- TFs -->
 	<include file="$(find mag_description)/launch/magabotURDF.launch"/>
 	
 
 	<!-- ....... SENSORS ....... --> -->
-	<group if="$(arg nav)">
+	<group if="$(arg laser)">
 		<!-- LASER SCAN -->
-		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM0" if="$(arg switch)"/>
-		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM1" unless="$(arg switch)"/>
-		
-		<!-- WIIMOTE -->
-		<node name="wiimote" pkg="wiimote" type="wiimote_node.py">
-			<remap from="/imu/data" to="/imu/data_raw"/>
-			<remap from="joy" to="wiiJoy"/>
-		</node>
+		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/laser" />
   </group>
 	
 	
