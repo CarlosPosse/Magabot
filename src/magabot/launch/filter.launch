@@ -10,7 +10,7 @@
   </node>-->
   
   <!-- EXTENDED KALMAN FILTER -->
-  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
     <param name="output_frame" value="odom_combined"/>
     <remap from="/robot_pose_ekf/odom_combined" to="/odom_combined"/>
     <param name="freq" value="30.0"/>

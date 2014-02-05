@@ -5,8 +5,8 @@
 	
 	<!-- ....... MAGABOT CORE ....... -->
   <!-- ROSSERIAL -->
-	<node name="serial_mag" pkg="rosserial_server" type="serial_node" args="_port:=/dev/arduino_Magabot" output="screen" />
-  <node name="serial_imu" pkg="rosserial_server" type="serial_node" args="_port:=/dev/arduino_IMU" output="screen" />
+	<node name="serial_mag" pkg="rosserial_server" type="serial_node" args="_port:=/dev/ttyACM1" output="screen" />
+  <node name="serial_imu" pkg="rosserial_server" type="serial_node" args="_port:=/dev/ttyACM3" output="screen" />
   
   <!-- Motor Control -->
   <node name="Controller" pkg="magabot" type="Controller"/>
@@ -24,7 +24,7 @@
 	<!-- ....... SENSORS ....... --> -->
 	<group if="$(arg laser)">
 		<!-- LASER SCAN -->
-		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/laser" />
+		<node name="laser" pkg="urg_node" type="urg_node" args="_serial_port:=/dev/ttyACM2" />
   </group>
 	
 	

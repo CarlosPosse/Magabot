@@ -19,7 +19,7 @@
   
   <!-- Sensor TFs -->
   <xacro:macro name="hokuyo_tf"> <origin xyz="0 0.0305 ${height/2+0.07}" rpy="0 0 ${PI/2}"/> </xacro:macro>
-	<xacro:macro name="wiimote_tf"> <origin xyz="0 -0.0721 ${height/2}" rpy="0 0 0"/> </xacro:macro>
+	<xacro:macro name="imu_tf"> <origin xyz="0 -0.0721 ${height/2}" rpy="0 0 0"/> </xacro:macro>
 
   <!-- Import Gazebo plugins -->
   <xacro:include filename="$(find mag_description)/urdf/magabot.gazebo" />
@@ -31,7 +31,7 @@
   
   <!-- Import Sensors -->
   <xacro:include filename="$(find mag_description)/urdf/sensors/hokuyo_laser.xacro" />
-  <xacro:include filename="$(find mag_description)/urdf/sensors/microstrain.xacro" />
+  <xacro:include filename="$(find mag_description)/urdf/sensors/imu.xacro" />
   
   <!-- Import Materials -->
   <xacro:include filename="$(find mag_description)/urdf/materials/materials.xacro" />
@@ -60,9 +60,9 @@
   	<xacro:hokuyo_tf/>
   </xacro:hokuyo_laser>
   
-  <xacro:microstrain parent="base_link" topic="imu_data">
-  	<xacro:wiimote_tf/>
-  </xacro:microstrain>
+  <xacro:imu parent="base_link" link="imu" topic="imu_data">
+  	<xacro:imu_tf/>
+  </xacro:imu>
   
   <!-- ....... GAZEBO PLUGINS ....... -->
   

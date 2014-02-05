@@ -5,13 +5,13 @@
 
   <xacro:property name="PI" value="3.14159"/>
 
-  <xacro:macro name="microstrain_gazebo" params="topic">
+  <xacro:macro name="imu_gazebo" params="topic link">
     <gazebo>
       <plugin name="imu_controller" filename="libgazebo_ros_imu.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>80</updateRate>
         
-        <bodyName>microstrain_link</bodyName>
+        <bodyName>${link}</bodyName>
         <topicName>${topic}</topicName>
         <serviceName>/default_imu</serviceName>
         

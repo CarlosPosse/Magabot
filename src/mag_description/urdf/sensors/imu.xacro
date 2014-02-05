@@ -11,10 +11,10 @@
   <xacro:property name="imuHeight" value="0.01241"/> <!-- Height -->
 
 	<!-- Include Gazebo element -->
-	<xacro:include filename="$(find mag_description)/urdf/sensors/microstrain.gazebo.xacro" />
+	<xacro:include filename="$(find mag_description)/urdf/sensors/imu.gazebo.xacro" />
 
-	<xacro:macro name="microstrain" params="parent *origin topic">
-		<link name="microstrain_link">
+	<xacro:macro name="imu" params="parent link *origin topic">
+		<link name="${link}">
 		  <visual>
 		    <origin xyz="0 0 ${imuHeight/2}"/>
 		    <geometry>
@@ -36,15 +36,15 @@
 			</inertial>
 		</link>
 		
-		<joint name="microstrain_joint" type="fixed">
+		<joint name="imu_joint" type="fixed">
 			<axis xyz="0 1 0" />
 			<insert_block name="origin" />
 			<parent link="${parent}"/>
-			<child link="microstrain_link"/>
+			<child link="${link}"/>
 		</joint>
 
 		<!-- Gazebo element -->
-		<xacro:microstrain_gazebo topic="${topic}"/>
+		<xacro:imu_gazebo topic="${topic}" link="${link}"/>
 	</xacro:macro>
 	
 </robot>
